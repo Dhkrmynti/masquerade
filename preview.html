@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="brand/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta property="og:image" content="brand/mark-512.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Masquerade · every trade wears a new mask</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0506;--bg2:#140a0b;--bg3:#1d0f10;--ink:#f6ead6;--mute:#bba98f;--line:rgba(230,195,120,.16);--gold:#e6c378;--gold2:#c9a24f;--vel:#6e1422;--vel2:#8e1b2c;--vel3:#4a0d17}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 'Inter Tight',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.pf{font-family:'Playfair Display',serif}.mono{font-family:'JetBrains Mono',monospace}
+.eyebrow{font:500 12px 'JetBrains Mono';letter-spacing:.4em;color:var(--gold);text-transform:uppercase}
+
+/* ===== STAGE (hero) ===== */
+.stage{position:relative;height:100vh;min-height:760px;max-height:1000px;overflow:hidden;background:radial-gradient(ellipse at 50% 30%,#1e0c0e,#0a0506 70%)}
+.spot{position:absolute;left:50%;top:-140px;width:900px;height:1100px;transform:translateX(-50%);background:conic-gradient(from 160deg at 50% 0,transparent 0deg,rgba(255,236,190,.15) 19deg,rgba(255,236,190,.17) 30deg,rgba(255,236,190,.15) 41deg,transparent 60deg);filter:blur(8px);animation:spot 7s ease-in-out infinite alternate;pointer-events:none}
+@keyframes spot{to{transform:translateX(-50%) rotate(2deg)}}
+.dust{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.floor{position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(#2a1208,#100603);border-top:4px solid var(--gold2);box-shadow:0 -10px 40px rgba(230,195,120,.12)}
+.floor:before{content:'';position:absolute;left:50%;top:0;width:620px;height:100px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,236,190,.35),transparent)}
+.floor:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 120px,rgba(0,0,0,.25) 120px 122px);opacity:.6}
+/* curtains: velvet texture from js/stage.js; gathered and tied back on open */
+.cur{position:absolute;top:0;bottom:0;width:52%;z-index:4;background:#3a0710 repeat-x;background-size:auto 100%;pointer-events:none;
+ transition:transform 2.4s cubic-bezier(.65,0,.2,1),clip-path 2.4s cubic-bezier(.65,0,.2,1);box-shadow:0 0 60px rgba(0,0,0,.7)}
+.cur.l{left:0;transform-origin:left center;clip-path:polygon(0 0,100% 0%,100% 8%,100% 16%,100% 24%,100% 32%,100% 38%,100% 43%,100% 48%,100% 53%,100% 60%,100% 68%,100% 78%,100% 89%,100% 100%,0 100%)}
+.cur.r{right:0;transform-origin:right center;background-position:right top;clip-path:polygon(100% 0,0% 0%,0% 8%,0% 16%,0% 24%,0% 32%,0% 38%,0% 43%,0% 48%,0% 53%,0% 60%,0% 68%,0% 78%,0% 89%,0% 100%,100% 100%)}
+.open .cur.l{transform:scaleX(.32);clip-path:polygon(0 0,100.0% 0%,96.4% 8%,92.4% 16%,88.0% 24%,82.8% 32%,78.0% 38%,73.0% 43%,62.0% 48%,68.6% 53%,74.7% 60%,80.6% 68%,87.2% 78%,93.8% 89%,100.0% 100%,0 100%)}
+.open .cur.r{transform:scaleX(.32);clip-path:polygon(100% 0,0.0% 0%,3.6% 8%,7.6% 16%,12.0% 24%,17.2% 32%,22.0% 38%,27.0% 43%,38.0% 48%,31.4% 53%,25.3% 60%,19.4% 68%,12.8% 78%,6.2% 89%,0.0% 100%,100% 100%)}
+/* gold fringe on the leading edges */
+.cur:before{content:'';position:absolute;top:0;bottom:0;width:12px;background:repeating-linear-gradient(90deg,#f3d58d 0 1px,rgba(201,162,79,.5) 1px 3px);box-shadow:0 0 8px rgba(0,0,0,.6)}
+.cur.l:before{right:0}.cur.r:before{left:0}
+.cur:after{content:'';position:absolute;inset:0;background:radial-gradient(120% 60% at 50% 40%,transparent 40%,rgba(0,0,0,.35))}
+/* tie-backs: twisted gold rope wrapped round the gathered curtain, tassel hanging off the end */
+.tie{position:absolute;top:calc(48% - 7px);height:14px;width:calc(52% * .32 * .62 + 10px);z-index:5;opacity:0;transition:opacity .8s 2.1s;pointer-events:none;border-radius:7px;
+ background:repeating-linear-gradient(60deg,#7a5418 0 3px,#f6e0a4 3px 6px,#c9a24f 6px 9px);box-shadow:0 6px 10px rgba(0,0,0,.6),inset 0 -3px 4px rgba(60,35,10,.5)}
+.tie:after{content:'';position:absolute;top:6px;width:18px;height:58px;background:linear-gradient(90deg,#8a6424,#f6e0a4 50%,#8a6424);clip-path:polygon(38% 0,62% 0,64% 18%,100% 100%,0 100%,36% 18%);filter:drop-shadow(0 4px 4px rgba(0,0,0,.5))}
+.tie.l{left:0}.tie.l:after{right:-6px}.tie.r{right:0}.tie.r:after{left:-6px}
+.open .tie{opacity:1}
+.valance{position:absolute;top:0;left:0;width:100%;height:132px;z-index:6;pointer-events:none;filter:drop-shadow(0 14px 16px rgba(0,0,0,.65))}
+/* nav sits on the valance */
+nav{position:absolute;top:0;left:0;right:0;z-index:10;height:72px}
+nav .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;font:600 22px 'Playfair Display';color:var(--ink)}
+.logo svg{width:38px;height:21px}
+.links{display:flex;gap:26px;padding:9px 22px;border-radius:999px;background:rgba(10,5,6,.55);border:1px solid var(--line);font-size:14px;color:var(--mute);backdrop-filter:blur(6px)}
+.links a:hover{color:var(--gold)}
+.tk{display:inline-flex;align-items:stretch;font:500 13px 'JetBrains Mono';letter-spacing:.14em;transition:transform .2s}
+.tk:hover{transform:translateY(-2px) rotate(-1deg)}
+.tk span{padding:12px 18px;background:var(--gold);color:#2a1208;position:relative}
+.tk span:last-child{background:rgba(10,5,6,.5);color:var(--gold);border:2px dashed var(--gold);border-left:0;padding:10px 14px}
+/* center act */
+.act{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-top:50px}
+.m3d{width:520px;height:270px;max-width:90vw;margin-bottom:6px;position:relative}
+.m3d svg.fb{display:none;width:60%;margin:50px auto}.no-webgl .m3d svg.fb{display:block}
+.act h1{font:400 clamp(48px,6.6vw,96px)/1.02 'Playfair Display';letter-spacing:-.01em;margin:14px 0 14px;text-shadow:0 4px 30px rgba(0,0,0,.6)}
+.act h1 i{color:var(--gold)}
+.act p{color:var(--mute);font-size:19px;max-width:560px}
+.ask{margin-top:28px;display:flex;align-items:center;gap:10px;width:600px;max-width:90vw;padding:8px 8px 8px 22px;border-radius:999px;border:1px solid var(--line);background:rgba(20,10,11,.75);backdrop-filter:blur(8px)}
+.ask input{flex:1;background:transparent;border:0;outline:0;color:var(--ink);font:400 16px 'Inter Tight'}
+.ask input::placeholder{color:var(--mute)}
+.ask button{padding:12px 20px;border-radius:999px;border:0;background:var(--vel2);color:var(--ink);font:500 15px 'Inter Tight';cursor:pointer}
+.ask button:hover{background:#a8243a}
+/* hero entrance after the curtains */
+.act>*{opacity:0;transform:translateY(16px);transition:opacity 1s,transform 1s}
+.open .act>*{opacity:1;transform:none}
+.open .act>*:nth-child(1){transition-delay:1.2s}.open .act>*:nth-child(2){transition-delay:1.4s}.open .act>*:nth-child(3){transition-delay:1.55s}.open .act>*:nth-child(4){transition-delay:1.7s}.open .act>*:nth-child(5){transition-delay:1.85s}
+
+/* ===== programme sections ===== */
+section.s{padding:120px 0;position:relative}
+.head{text-align:center;max-width:720px;margin:0 auto 60px}
+h2{font:400 clamp(38px,4.6vw,60px)/1.06 'Playfair Display';margin-top:14px}h2 i{color:var(--gold)}
+.head p{color:var(--mute);margin-top:14px;font-size:18px}
+.orn{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold2);margin:0 auto 18px}
+.orn:before,.orn:after{content:'';width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2))}.orn:after{transform:scaleX(-1)}
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.actc{position:relative;padding:34px 30px 30px;border:1px solid var(--line);background:linear-gradient(180deg,var(--bg3),var(--bg2));border-radius:6px;transition:transform .3s,border-color .3s}
+.actc:hover{transform:translateY(-4px);border-color:var(--gold2)}
+.actc:before{content:'';position:absolute;inset:8px;border:1px solid rgba(230,195,120,.1);border-radius:3px;pointer-events:none}
+.actc .no{font:italic 400 64px/1 'Playfair Display';color:var(--gold)}
+.actc small{display:block;font:500 11px 'JetBrains Mono';letter-spacing:.3em;color:var(--mute);margin-top:6px}
+.actc h3{font:600 26px 'Playfair Display';margin:14px 0 10px}
+.actc p{color:var(--mute);font-size:16px}
+.flow{margin-top:20px;font:400 13px 'JetBrains Mono';color:var(--mute);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.flow span{padding:4px 9px;border:1px solid var(--line)}.flow i{font-style:normal;color:var(--gold)}
+.cast{display:grid;grid-template-columns:.95fr 1.05fr;gap:44px;align-items:center}
+.bul{list-style:none;margin-top:26px;display:grid;gap:14px}
+.bul li{padding-left:30px;position:relative;color:var(--mute)}.bul li b{color:var(--ink);font-weight:500}
+.bul li:before{content:'✦';position:absolute;left:0;top:0;color:var(--gold)}
+.playbill{border:1px solid var(--line);background:var(--bg2);border-radius:6px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.8)}
+.playbill .top{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,var(--vel3),transparent)}
+.playbill .who{display:flex;gap:12px;align-items:center}.playbill .av{width:42px;height:42px;border-radius:50%;background:var(--vel2);display:grid;place-items:center;border:1px solid var(--gold2)}
+.playbill .who b{display:block;font:600 19px 'Playfair Display'}.playbill .who small{color:var(--mute);font-size:13px}
+.live{font:500 11px 'JetBrains Mono';letter-spacing:.2em;color:var(--gold)}.live:before{content:'● ';color:#7fc795}
+.msgs{padding:22px;display:flex;flex-direction:column;gap:12px}
+.m{max-width:84%;padding:12px 16px;border-radius:14px;font-size:15px}
+.m.u{align-self:flex-end;background:var(--vel2);border-bottom-right-radius:3px}
+.m.a{background:rgba(230,195,120,.06);border:1px solid var(--line);border-bottom-left-radius:3px}
+.limits{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px dashed var(--line)}
+.limits div{padding:16px 20px;border-right:1px dashed var(--line)}.limits div:last-child{border-right:0}
+.limits small{display:block;font:500 10px 'JetBrains Mono';letter-spacing:.2em;color:var(--mute)}
+.limits b{font:600 20px 'Playfair Display';color:var(--gold)}
+.rep{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
+.rep div{padding:30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .3s}
+.rep div:nth-child(3n){border-right:0}.rep div:nth-child(n+4){border-bottom:0}
+.rep div:hover{background:linear-gradient(180deg,rgba(142,27,44,.25),transparent)}
+.rep .ic{font-size:22px;color:var(--gold)}.rep h3{font:600 22px 'Playfair Display';margin:12px 0 6px}.rep p{color:var(--mute);font-size:15px}
+.rep .tag{display:inline-block;margin-top:12px;font:500 10px 'JetBrains Mono';letter-spacing:.24em;color:var(--gold2)}
+.fine{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.fp{padding:28px;border:1px solid var(--line);border-radius:6px}
+.fp.y{background:linear-gradient(180deg,rgba(127,199,149,.07),transparent)}.fp.n{background:linear-gradient(180deg,rgba(142,27,44,.18),transparent)}
+.fp small{font:500 12px 'JetBrains Mono';letter-spacing:.24em}.fp.y small{color:#9fd8ae}.fp.n small{color:#e58a98}
+.fp ul{list-style:none;margin-top:14px;display:grid;gap:10px;color:var(--mute)}
+.ticket{display:grid;grid-template-columns:1fr 260px;max-width:980px;margin:0 auto;filter:drop-shadow(0 30px 50px rgba(0,0,0,.6))}
+.ticket .main{background:linear-gradient(135deg,#f1dca6,#e6c378 50%,#c9a24f);color:#2a1208;padding:44px 48px;position:relative;border-radius:10px 0 0 10px}
+.ticket .main:before{content:'';position:absolute;inset:12px;border:1.5px solid rgba(42,18,8,.35);border-radius:4px;pointer-events:none}
+.ticket .main small{font:500 12px 'JetBrains Mono';letter-spacing:.3em}
+.ticket .main h2{color:#2a1208;margin-top:8px}
+.ticket .main p{margin-top:10px;max-width:460px;color:#4a2a10}
+.ticket .main .ca{margin-top:22px;display:inline-flex;gap:12px;align-items:center;padding:10px 14px;background:rgba(42,18,8,.08);border:1px dashed rgba(42,18,8,.5);font:500 14px 'JetBrains Mono'}
+.ticket .stub{background:linear-gradient(135deg,#e6c378,#c9a24f);color:#2a1208;padding:30px 26px;border-left:3px dashed rgba(42,18,8,.5);border-radius:0 10px 10px 0;display:grid;gap:14px;align-content:center;font:500 12px 'JetBrains Mono';letter-spacing:.14em}
+.ticket .stub b{display:block;font:600 20px 'Playfair Display';letter-spacing:0}
+footer{border-top:1px solid var(--line);padding:56px 0 70px;color:var(--mute);font-size:14px;text-align:center;background:linear-gradient(transparent,rgba(110,20,34,.15))}
+footer .pf{color:var(--ink);font-size:30px;font-style:italic}
+.preview-tag{position:fixed;bottom:18px;right:18px;z-index:30;font:500 11px 'JetBrains Mono';letter-spacing:.16em;padding:8px 12px;border-radius:999px;background:var(--gold);color:#2a1208}
+.still *,.still *:before,.still *:after{transition:none!important}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}.rv.on{opacity:1;transform:none}
+@media (max-width:900px){.links{display:none}.acts,.rep,.fine,.cast,.ticket{grid-template-columns:1fr}.rep div{border-right:0}.limits{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f3d58d"/><stop offset=".5" stop-color="#c79a4a"/><stop offset="1" stop-color="#8f6726"/></linearGradient>
+ <symbol id="mask" viewBox="0 0 200 110"><path d="M100 30 C70 4 22 2 6 26 C-2 40 6 70 30 86 C52 100 80 92 100 70 C120 92 148 100 170 86 C194 70 202 40 194 26 C178 2 130 4 100 30Z" fill="url(#gold)" stroke="#6b4a18" stroke-width="2"/><ellipse cx="56" cy="50" rx="24" ry="14" fill="#0a0506" transform="rotate(-8 56 50)"/><ellipse cx="144" cy="50" rx="24" ry="14" fill="#0a0506" transform="rotate(8 144 50)"/><circle cx="100" cy="44" r="5" fill="#8e1b2c"/></symbol>
+</defs></svg>
+
+<header class="stage" id="stage">
+ <div class="spot"></div>
+ <canvas class="dust" id="dust"></canvas>
+ <div class="floor"></div>
+ <div class="act">
+  <div class="m3d" id="m3d"><svg class="fb" viewBox="0 0 200 110"><use href="#mask"/></svg></div>
+  <div class="eyebrow">Tonight on Robinhood Chain</div>
+  <h1>Every trade wears<br>a <i>new mask.</i></h1>
+  <p>Send an envoy on stage with a purse it can't exceed. It trades tokenized stocks from its own wallet, and yours never hands over a key.</p>
+  <div class="ask"><svg viewBox="0 0 200 110" width="28"><use href="#mask"/></svg><input placeholder="Buy $200 of TSLA if it opens red"><button onclick="location.href='app.html#envoys'">Send an envoy</button></div>
+ </div>
+ <div class="cur l"></div><div class="cur r"></div><div class="tie l"></div><div class="tie r"></div>
+ <canvas class="valance" id="valance"></canvas>
+ <nav><div class="wrap">
+  <a class="logo" href="#"><svg viewBox="0 0 200 110"><use href="#mask"/></svg>Masquerade</a>
+  <div class="links"><a href="#acts">The acts</a><a href="#cast">The cast</a><a href="#rep">Repertoire</a><a href="#fine">Fine print</a><a href="#ticket">$MASK</a></div>
+  <a class="tk" href="app.html"><span>ADMIT ONE</span><span>ENTER</span></a>
+ </div></nav>
+</header>
+
+<section class="s" id="acts"><div class="wrap">
+ <div class="head rv"><div class="orn">✦</div><div class="eyebrow">The programme</div><h2>A trade in <i>three acts.</i></h2><p>Your main wallet funds a fresh address and the trade happens there. Positions stay separated, and your main wallet never signs a swap.</p></div>
+ <div class="acts">
+  <div class="actc rv"><div class="no">I</div><small>ACT ONE</small><h3>Put on a mask</h3><p>A fresh address is derived from your wallet for this one trade. Its only link to you is the funding transfer, and that transfer is public.</p><div class="flow"><span>main</span><i>→</i><span>mask #7</span></div></div>
+  <div class="actc rv"><div class="no">II</div><small>ACT TWO</small><h3>Trade behind it</h3><p>Swap into AAPL, NVDA, SPY and more from the mask. Order, size and fill live on the mask only.</p><div class="flow"><span>mask #7</span><i>⇄</i><span>NVDA</span></div></div>
+  <div class="actc rv"><div class="no">III</div><small>ACT THREE</small><h3>Leave the ball</h3><p>Hold on the mask, move to another mask, or bring it home when you choose. Every mask stays under your keys.</p><div class="flow"><span>mask #7</span><i>→</i><span>retired</span></div></div>
+ </div>
+</div></section>
+
+<section class="s" id="cast" style="padding-top:0"><div class="wrap cast">
+ <div class="rv">
+  <div class="eyebrow">The cast</div>
+  <h2>Envoys carry a <i>purse,</i><br>not your keys.</h2>
+  <p style="color:var(--mute);margin-top:16px;font-size:18px">An envoy gets its own mask, a purse, a list of stocks and a curfew. The purse is the only money it can reach, so it is the hard limit.</p>
+  <ul class="bul"><li><b>Purse-capped.</b> It can't spend what isn't in its mask.</li><li><b>Curfew.</b> At the final bow it stops and waits for you.</li><li><b>Script.</b> Only the stocks you named, nothing else.</li><li><b>Recall.</b> Call it off stage any time; funds return to you.</li></ul>
+ </div>
+ <div class="playbill rv">
+  <div class="top"><div class="who"><div class="av"><svg viewBox="0 0 200 110" width="26"><use href="#mask"/></svg></div><div><b>The Contessa</b><small>playing AAPL · MSFT · GOOGL</small></div></div><span class="live">ON STAGE</span></div>
+  <div class="msgs"><div class="m u">If big tech dips 2% today, pick up some MSFT. Stay under $300.</div><div class="m a">Noted. My mask holds $300 and nothing more, so that's the ceiling no matter what I see. I'll report each fill here.</div><div class="m u">And stop at 6pm.</div><div class="m a">Curfew set for 18:00. After that I hold and wait for you.</div></div>
+  <div class="limits"><div><small>PURSE</small><b>$300</b></div><div><small>PER ORDER</small><b>$75</b></div><div><small>STOCKS</small><b>3</b></div><div><small>CURFEW</small><b>18:00</b></div></div>
+ </div>
+</div></section>
+
+<section class="s" id="rep" style="padding-top:0"><div class="wrap">
+ <div class="head rv"><div class="orn">✦</div><div class="eyebrow">Repertoire</div><h2>Everything you'd do in the open, <i>masked.</i></h2></div>
+ <div class="rep rv">
+  <div><span class="ic">⇄</span><h3>Masked swaps</h3><p>Trade tokenized stocks and ETH from a single-use address.</p><span class="tag">NOW PLAYING</span></div>
+  <div><span class="ic">⤳</span><h3>Masked bridge</h3><p>Arrive on Robinhood Chain straight into a fresh mask.</p><span class="tag">NOW PLAYING</span></div>
+  <div><span class="ic">✦</span><h3>Envoys</h3><p>Purse-capped agents with curfews and a script of stocks.</p><span class="tag">NOW PLAYING</span></div>
+  <div><span class="ic">▦</span><h3>Ensembles</h3><p>Bundle stocks into one basket, bought across several masks.</p><span class="tag">COMING SOON</span></div>
+  <div><span class="ic">◐</span><h3>Private box</h3><p>All your masks in one dashboard, stored only in your browser.</p><span class="tag">COMING SOON</span></div>
+  <div><span class="ic">✎</span><h3>Name tags</h3><p>Label your masks so you remember who played which role.</p><span class="tag">COMING SOON</span></div>
+ </div>
+</div></section>
+
+<section class="s" id="fine" style="padding-top:0"><div class="wrap">
+ <div class="head rv"><div class="orn">✦</div><div class="eyebrow">The fine print</div><h2>What a mask <i>can and can't</i> hide.</h2><p>Privacy on a public chain has edges. Here they are, before the show.</p></div>
+ <div class="fine">
+  <div class="fp y rv"><small>A MASK HIDES</small><ul><li>Your trades from your main wallet's own activity list</li><li>Your full position at a glance, split across masks</li><li>Which stocks your envoy is watching</li></ul></div>
+  <div class="fp n rv"><small>A MASK DOES NOT HIDE</small><ul><li>The funding transfer from your main wallet, which anyone can follow on-chain</li><li>Timing patterns, if you fund and trade in the same minute</li><li>Anything you post publicly about your trades</li></ul></div>
+ </div>
+</div></section>
+
+<section class="s" id="ticket" style="padding-top:0"><div class="wrap">
+ <div class="ticket rv">
+  <div class="main"><small>ADMIT ONE · THE MASQUERADE BALL</small><h2>$MASK</h2><p>Your ticket to the ball on Robinhood Chain. The contract address is announced at launch, never before.</p><div class="ca">CA · announced at launch</div></div>
+  <div class="stub"><div>CHAIN<b>Robinhood</b></div><div>SUPPLY<b>TBA</b></div><div>DEV ALLOCATION<b>TBA</b></div><div>SEAT<b>Masked</b></div></div>
+ </div>
+</div></section>
+
+<footer><div class="wrap"><div class="pf">Curtain call.</div><p style="margin-top:12px">Masquerade · trade behind a mask. Not affiliated with Robinhood. Tokenized stocks are not shares. Not financial advice.</p><p class="mono" style="margin-top:14px;font-size:12px;letter-spacing:.2em">X · DOCS · TERMS · © 2026</p></div></footer>
+
+<div class="preview-tag">PREVIEW · UI ONLY</div>
+
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import {mountMask} from './mask3d.js';
+import {dressStage} from './js/stage.js';
+dressStage();
+const m=mountMask(document.getElementById('m3d'),{particles:false,interactive:true,dist:8.4});
+if(!m)document.documentElement.classList.add('no-webgl');
+</script>
+<script>
+// open the curtains (?still skips the animation, for screenshots)
+if(location.search.includes('closed')){document.documentElement.classList.add('still')}
+else if(location.search.includes('still')){document.documentElement.classList.add('still');document.getElementById('stage').classList.add('open');document.querySelectorAll('.rv').forEach(e=>e.classList.add('on'))}
+else requestAnimationFrame(()=>setTimeout(()=>document.getElementById('stage').classList.add('open'),250));
+// dust drifting in the spotlight
+const cv=document.getElementById('dust'),g=cv.getContext('2d');let W,H,P=[];
+const rs=()=>{W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;P=[...Array(110)].map(()=>({x:W/2+(Math.random()-.5)*W*.45,y:Math.random()*H,r:Math.random()*1.8+.4,v:Math.random()*.25+.05,a:Math.random()}))};
+rs();addEventListener('resize',rs);
+(function f(){g.clearRect(0,0,W,H);for(const p of P){p.y-=p.v;p.x+=Math.sin((p.y+p.a*100)/60)*.2;if(p.y<0){p.y=H;p.x=W/2+(Math.random()-.5)*W*.45}
+ const k=1-Math.abs(p.x-W/2)/(W*.25);if(k<=0)continue;g.fillStyle=`rgba(255,226,170,${.5*k*(.4+.6*Math.abs(Math.sin(p.a*6+p.y/80)))})`;g.beginPath();g.arc(p.x,p.y,p.r,0,7);g.fill()}requestAnimationFrame(f)})();
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*100+'ms';io.observe(el)});
+</script>
+</body>
+</html>

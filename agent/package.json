@@ -1,0 +1,15 @@
+{
+  "name": "masquerade-agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/runner.js",
+    "test": "node --test test/rules.test.js test/llm.test.js",
+    "e2e": "node scripts/e2e.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.6.0",
+    "viem": "2.21.0",
+    "zod": "^3.25.76"
+  }
+}

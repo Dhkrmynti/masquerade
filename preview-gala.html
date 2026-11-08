@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="brand/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta property="og:image" content="brand/mark-512.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Masquerade · trade behind a mask</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120d0f;--bg2:#1b1416;--ink:#f3ead9;--mute:#a89a88;--line:rgba(243,234,217,.12);--gold:#d8b26a;--wine:#8e2b3a;--wine2:#b33d50;--card:rgba(255,255,255,.03)}
+[data-theme=day]{--bg:#f4ecdc;--bg2:#ebe0ca;--ink:#1d1416;--mute:#6f5f52;--line:rgba(29,20,22,.14);--gold:#9a7230;--wine:#7a1f2e;--wine2:#9a2b3d;--card:rgba(255,255,255,.5)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 'Inter Tight',system-ui,sans-serif;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.serif{font-family:'Fraunces',serif}
+.mono{font-family:'JetBrains Mono',monospace}
+/* damask texture */
+body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.05;background-image:radial-gradient(circle at 25% 25%,var(--gold) 1.2px,transparent 1.6px),radial-gradient(circle at 75% 75%,var(--gold) 1.2px,transparent 1.6px);background-size:28px 28px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:12px;font:500 22px 'Fraunces',serif;letter-spacing:.01em}
+.logo svg{width:38px;height:22px}
+.links{display:flex;gap:30px;font-size:15px;color:var(--mute)}.links a:hover{color:var(--ink)}
+.right{display:flex;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font:500 15px 'Inter Tight';border:1px solid transparent;cursor:pointer;transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn.p{background:var(--wine);color:#f8eedd}.btn.p:hover{background:var(--wine2)}
+.btn.g{border-color:var(--line);color:var(--ink);background:transparent}
+.tog{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;font-size:16px}
+
+/* hero */
+.hero{padding:96px 0 80px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.eyebrow{font:500 12px 'JetBrains Mono';letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+h1{font:300 clamp(48px,6.4vw,88px)/1.02 'Fraunces',serif;letter-spacing:-.02em;margin:20px 0 24px}
+h1 em{font-style:italic;color:var(--gold)}
+.lede{font-size:19px;color:var(--mute);max-width:520px}
+.ask{margin-top:36px;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 22px;border-radius:999px;border:1px solid var(--line);background:var(--card);max-width:560px}
+.ask input{flex:1;background:transparent;border:0;outline:0;color:var(--ink);font:400 16px 'Inter Tight'}
+.ask input::placeholder{color:var(--mute)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{font:400 13px 'JetBrains Mono';color:var(--mute);border:1px dashed var(--line);padding:6px 12px;border-radius:999px;cursor:pointer}
+.chip:hover{color:var(--ink);border-color:var(--gold)}
+.mask-stage{position:relative;aspect-ratio:1;display:grid;place-items:center}
+.mask-stage .halo{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--wine) 45%,transparent),transparent 65%);filter:blur(10px)}
+.mask-stage .ring{position:absolute;inset:4%;border-radius:50%;border:1px solid var(--line)}
+.mask-stage .ring.b{inset:16%;border-style:dashed}
+.mask-stage svg{width:78%;position:relative;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
+.m3d{position:absolute;inset:-10% -14%;z-index:1}
+.m3d canvas{display:block}
+.mask-stage svg.fallback{display:none}
+.no-webgl .mask-stage svg.fallback{display:block}
+.mask-stage .ring{animation:spin 60s linear infinite}.mask-stage .ring.b{animation-duration:90s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.addr{z-index:2;animation:bob 6s ease-in-out infinite}.addr:nth-of-type(2n){animation-delay:-3s}
+@keyframes bob{50%{transform:translateY(-8px)}}
+/* aurora behind the hero */
+.hero:before{content:'';position:absolute;inset:-20% -10% auto;height:120%;background:radial-gradient(40% 50% at 70% 40%,color-mix(in srgb,var(--wine) 40%,transparent),transparent 70%),radial-gradient(30% 40% at 85% 70%,color-mix(in srgb,var(--gold) 18%,transparent),transparent 70%);filter:blur(30px);animation:drift 14s ease-in-out infinite alternate;pointer-events:none}
+@keyframes drift{to{transform:translate(-4%,3%) scale(1.06)}}
+.hero .wrap{position:relative}
+h1 em{background:linear-gradient(100deg,#b8873a,#f6dc98 40%,#c99a4a 60%,#f3d58d);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:-220% 0}}
+/* ticker */
+.tick{overflow:hidden;border-bottom:1px solid var(--line);padding:16px 0;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.tick div{display:flex;gap:48px;width:max-content;animation:tick 40s linear infinite;font:400 14px 'JetBrains Mono';color:var(--mute)}
+.tick span b{color:var(--gold);font-weight:500;margin-right:8px}
+@keyframes tick{to{transform:translateX(-50%)}}
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+/* glow cards */
+.step,.f,.h,.card,.tok{position:relative}
+.step:after,.f:after{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),var(--gold),transparent 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none}
+.step:hover:after,.f:hover:after{opacity:1}
+.addr{position:absolute;font:400 12px 'JetBrains Mono';color:var(--mute);background:var(--bg2);border:1px solid var(--line);padding:6px 10px;border-radius:8px;white-space:nowrap}
+.addr b{color:var(--gold);font-weight:500}
+
+/* stat strip */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.strip div{padding:26px 0;border-right:1px solid var(--line);padding-left:24px}.strip div:last-child{border-right:0}
+.strip small{display:block;font:500 11px 'JetBrains Mono';letter-spacing:.2em;color:var(--mute);text-transform:uppercase}
+.strip b{display:block;font:400 30px 'Fraunces',serif;margin-top:6px}
+
+/* sections */
+section.s{padding:110px 0}
+.head{max-width:680px;margin-bottom:56px}
+h2{font:300 clamp(36px,4.4vw,56px)/1.06 'Fraunces',serif;letter-spacing:-.015em;margin-top:14px}h2 em{font-style:italic;color:var(--gold)}
+.head p{color:var(--mute);margin-top:16px;font-size:18px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;counter-reset:s}
+.step{padding:30px;border:1px solid var(--line);border-radius:22px;background:var(--card);position:relative}
+.step:before{counter-increment:s;content:'0' counter(s);font:500 12px 'JetBrains Mono';color:var(--gold);letter-spacing:.2em}
+.step h3{font:500 26px 'Fraunces',serif;margin:14px 0 10px}
+.step p{color:var(--mute);font-size:16px}
+.flow{margin-top:22px;font:400 13px 'JetBrains Mono';color:var(--mute);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.flow span{padding:4px 9px;border-radius:6px;border:1px solid var(--line)}.flow i{font-style:normal;color:var(--gold)}
+
+/* envoys */
+.envoy{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center}
+.card{border:1px solid var(--line);border-radius:24px;background:var(--bg2);overflow:hidden}
+.card .top{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--line)}
+.card .who{display:flex;gap:12px;align-items:center}.card .av{width:38px;height:38px;border-radius:50%;background:var(--wine);display:grid;place-items:center}
+.card .who b{display:block;font-weight:600}.card .who small{color:var(--mute);font-size:13px}
+.live{font:500 11px 'JetBrains Mono';letter-spacing:.18em;color:#7fc795}.live:before{content:'● '}
+.msgs{padding:22px;display:flex;flex-direction:column;gap:12px}
+.m{max-width:82%;padding:12px 16px;border-radius:16px;font-size:15px}
+.m.u{align-self:flex-end;background:var(--wine);color:#f8eedd;border-bottom-right-radius:4px}
+.m.a{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px}
+.limits{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.limits div{padding:16px 20px;border-right:1px solid var(--line)}.limits div:last-child{border-right:0}
+.limits small{display:block;font:500 10px 'JetBrains Mono';letter-spacing:.18em;color:var(--mute)}
+.limits b{font:500 18px 'Inter Tight'}
+.bul{list-style:none;margin-top:26px;display:grid;gap:14px}
+.bul li{padding-left:30px;position:relative;color:var(--mute)}.bul li b{color:var(--ink);font-weight:500}
+.bul li:before{content:'';position:absolute;left:0;top:9px;width:14px;height:8px;border-radius:8px 8px 3px 3px;background:var(--gold)}
+
+/* features */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.f{padding:28px;border:1px solid var(--line);border-radius:20px;background:var(--card);transition:border-color .2s,transform .2s}
+.f:hover{border-color:var(--gold);transform:translateY(-3px)}
+.f .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--wine) 30%,transparent);color:var(--gold);font-size:20px;margin-bottom:18px}
+.f h3{font:500 22px 'Fraunces',serif;margin-bottom:8px}.f p{color:var(--mute);font-size:15px}
+.f .tag{display:inline-block;margin-top:14px;font:500 11px 'JetBrains Mono';letter-spacing:.16em;color:var(--gold)}
+
+/* honest */
+.honest{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.h{padding:26px 28px;border-radius:18px;border:1px solid var(--line)}
+.h.y{background:color-mix(in srgb,#7fc795 7%,transparent)}.h.n{background:color-mix(in srgb,var(--wine) 10%,transparent)}
+.h small{font:500 12px 'JetBrains Mono';letter-spacing:.2em}.h.y small{color:#7fc795}.h.n small{color:var(--wine2)}
+.h ul{list-style:none;margin-top:14px;display:grid;gap:10px;color:var(--mute)}
+
+/* token */
+.tok{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:48px;border-radius:28px;border:1px solid var(--line);background:linear-gradient(135deg,color-mix(in srgb,var(--wine) 22%,var(--bg2)),var(--bg2))}
+.ca{margin-top:22px;display:inline-flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;border:1px solid var(--line);font:400 14px 'JetBrains Mono';background:var(--bg)}
+.ca button{background:transparent;border:0;color:var(--gold);cursor:pointer;font:500 12px 'JetBrains Mono'}
+.tl{display:grid;gap:12px}
+.tl div{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}.tl span:first-child{color:var(--mute)}
+
+footer{border-top:1px solid var(--line);padding:48px 0 64px;color:var(--mute);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.preview-tag{position:fixed;bottom:18px;right:18px;z-index:30;font:500 11px 'JetBrains Mono';letter-spacing:.16em;padding:8px 12px;border-radius:999px;background:var(--gold);color:#1d1416}
+
+
+/* ===== centered layout (Ghostdex-style structure, Masquerade identity) ===== */
+[data-layout=center] .links{padding:10px 22px;border:1px solid var(--line);border-radius:999px;background:var(--card);gap:26px}
+[data-layout=center] .hero{padding:40px 0 110px;text-align:center}
+[data-layout=center] .hero .wrap{grid-template-columns:1fr;justify-items:center;gap:0}
+[data-layout=center] .hero .wrap>div:first-child{display:flex;flex-direction:column;align-items:center}
+[data-layout=center] .mask-stage{order:-1;width:250px;max-width:60vw;margin:-10px 0 -18px}
+[data-layout=center] .mask-stage .addr,[data-layout=center] .mask-stage .ring{display:none}
+[data-layout=center] .m3d{inset:-30% -60%}
+[data-layout=center] h1{font-size:clamp(48px,6.6vw,92px);margin:14px 0 18px}
+[data-layout=center] .lede{margin:0 auto;max-width:600px}
+[data-layout=center] .ask{margin:30px auto 0;width:100%;max-width:620px;padding:8px 8px 8px 24px;box-shadow:0 20px 60px -20px color-mix(in srgb,var(--wine) 60%,transparent)}
+[data-layout=center] .chips{justify-content:center}
+.cachip{display:none;margin-top:24px;align-items:center;gap:10px;font:500 13px 'JetBrains Mono';color:var(--mute)}
+.cachip span{padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--ink)}
+[data-layout=center] .cachip{display:inline-flex}
+[data-layout=center] .hero:after{content:'';position:absolute;left:50%;bottom:-38%;width:1100px;height:520px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--gold) 45%,transparent),color-mix(in srgb,var(--wine) 55%,transparent) 55%,transparent);filter:blur(40px);opacity:.75;pointer-events:none;animation:glow 8s ease-in-out infinite alternate}
+@keyframes glow{to{opacity:.95;transform:translateX(-50%) scale(1.08)}}
+[data-layout=center] .head{margin-left:auto;margin-right:auto;text-align:center}
+[data-layout=center] .eyebrow{display:inline-block}
+/* layout switcher (temporary, for comparing) */
+.lsw{position:fixed;left:18px;bottom:18px;z-index:30;display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);font:500 11px 'JetBrains Mono';letter-spacing:.12em}
+.lsw button{border:0;background:transparent;color:var(--mute);padding:7px 12px;border-radius:999px;cursor:pointer;font:inherit;letter-spacing:inherit}
+.lsw button.on{background:var(--gold);color:#1d1416}
+@media (max-width:900px){.hero .wrap,.envoy,.tok,.honest{grid-template-columns:1fr}.steps,.grid{grid-template-columns:1fr}.strip .wrap{grid-template-columns:1fr 1fr}.links{display:none}.limits{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+ <defs>
+  <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f3d58d"/><stop offset=".5" stop-color="#c79a4a"/><stop offset="1" stop-color="#8f6726"/></linearGradient>
+  <symbol id="mask" viewBox="0 0 200 110">
+   <path d="M100 30 C70 4 22 2 6 26 C-2 40 6 70 30 86 C52 100 80 92 100 70 C120 92 148 100 170 86 C194 70 202 40 194 26 C178 2 130 4 100 30Z" fill="url(#gold)"/>
+   <path d="M100 30 C70 4 22 2 6 26 C-2 40 6 70 30 86 C52 100 80 92 100 70 C120 92 148 100 170 86 C194 70 202 40 194 26 C178 2 130 4 100 30Z" fill="none" stroke="#6b4a18" stroke-width="2"/>
+   <ellipse cx="56" cy="50" rx="24" ry="14" fill="#120d0f" transform="rotate(-8 56 50)"/>
+   <ellipse cx="144" cy="50" rx="24" ry="14" fill="#120d0f" transform="rotate(8 144 50)"/>
+   <path d="M18 30 Q40 18 60 28" fill="none" stroke="#fff3d0" stroke-opacity=".5" stroke-width="2"/>
+   <path d="M182 30 Q160 18 140 28" fill="none" stroke="#fff3d0" stroke-opacity=".5" stroke-width="2"/>
+   <circle cx="100" cy="44" r="5" fill="#8e2b3a"/>
+  </symbol>
+ </defs>
+</svg>
+
+<nav><div class="wrap">
+ <a class="logo" href="#"><svg viewBox="0 0 200 110"><use href="#mask"/></svg>Masquerade</a>
+ <div class="links"><a href="#how">How it works</a><a href="#envoys">Envoys</a><a href="#features">Features</a><a href="#limits">Honest limits</a><a href="#token">$MASK</a></div>
+ <div class="right"><button class="tog" id="tog" title="Day / night">☾</button><a class="btn p" href="app.html">Enter the ball</a></div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+ <div>
+  <div class="eyebrow">Tokenized stocks · Robinhood Chain</div>
+  <h1>Every trade<br>wears a <em>new mask.</em></h1>
+  <p class="lede">Buy and sell tokenized stocks through single-use addresses that never touch your main wallet. Or send an envoy with a fixed budget and let it work the room.</p>
+  <div class="ask"><svg viewBox="0 0 200 110" width="28"><use href="#mask"/></svg><input placeholder="Buy $200 of TSLA if it opens red" id="ask"><a class="btn p" href="#envoys">Send an envoy</a></div>
+  <div class="chips"><span class="chip">trim NVDA above +5%</span><span class="chip">DCA $50 into SPY weekly</span><span class="chip">bridge 0.1 ETH, mask it</span></div>
+  <div class="cachip">$MASK <span>CA · coming at launch</span></div>
+ </div>
+ <div class="mask-stage">
+  <div class="halo"></div><div class="ring"></div><div class="ring b"></div>
+  <div class="m3d" id="m3d"></div>
+  <svg class="fallback" viewBox="0 0 200 110"><use href="#mask"/></svg>
+  <div class="addr" style="top:10%;left:0">mask #1 · <b>0x4e1…a90c</b></div>
+  <div class="addr" style="top:24%;right:-4%">mask #2 · <b>0xb7f…12de</b></div>
+  <div class="addr" style="bottom:16%;left:4%">main wallet · <b>untouched</b></div>
+  <div class="addr" style="bottom:6%;right:2%">mask #3 · <b>0x09c…f3b1</b></div>
+ </div>
+</div></header>
+
+<div class="tick"><div id="tickrow"></div></div>
+
+<div class="strip"><div class="wrap">
+ <div><small>New address per trade</small><b>Always</b></div>
+ <div><small>Envoy can overspend</small><b>Never</b></div>
+ <div><small>Keys we hold</small><b>Zero</b></div>
+ <div><small>Chain</small><b>Robinhood</b></div>
+</div></div>
+
+<section class="s" id="how"><div class="wrap">
+ <div class="rv head"><div class="eyebrow">How it works</div><h2>Three moves. <em>No trail</em> back to you.</h2><p>Your main wallet funds a fresh address, the trade happens there, and the mask is retired. Anyone reading the chain sees a guest, not you.</p></div>
+ <div class="steps">
+  <div class="rv step"><h3>Put on a mask</h3><p>Masquerade derives a fresh address from your wallet for this one trade, so the trade has no shared history with your main wallet.</p><div class="flow"><span>main</span><i>→</i><span>mask #7</span></div></div>
+  <div class="rv step"><h3>Trade behind it</h3><p>Swap into AAPL, NVDA, SPY and more from the mask. The order, the size and the fill live on the mask only.</p><div class="flow"><span>mask #7</span><i>⇄</i><span>NVDA</span></div></div>
+  <div class="rv step"><h3>Leave the ball</h3><p>Hold the position on the mask, move it to another mask, or bring it home when you choose. Every mask stays under your keys.</p><div class="flow"><span>mask #7</span><i>→</i><span>retired</span></div></div>
+ </div>
+</div></section>
+
+<section class="s" id="envoys" style="padding-top:0"><div class="wrap envoy">
+ <div>
+  <div class="eyebrow">Envoys</div>
+  <h2>Agents with a <em>purse,</em> not a key.</h2>
+  <p style="color:var(--mute);margin-top:16px;font-size:18px">An envoy gets its own mask, a purse, a list of stocks and a curfew. The purse is the hard limit: it is the only money the envoy can reach.</p>
+  <ul class="bul">
+   <li><b>Purse-capped.</b> It can't spend what isn't in its mask.</li>
+   <li><b>Curfew.</b> At expiry it stops and waits for you.</li>
+   <li><b>Whitelist.</b> Only the stocks you named, nothing else.</li>
+   <li><b>Revocable.</b> Call it home any time, funds return to you.</li>
+  </ul>
+ </div>
+ <div class="rv card">
+  <div class="top"><div class="who"><div class="av"><svg viewBox="0 0 200 110" width="26"><use href="#mask"/></svg></div><div><b>The Contessa</b><small>watching AAPL · MSFT · GOOGL</small></div></div><span class="live">ON DUTY</span></div>
+  <div class="msgs">
+   <div class="m u">If big tech dips 2% today, pick up some MSFT. Stay under $300.</div>
+   <div class="m a">Noted. My mask holds $300 and nothing more, so that's the ceiling no matter what I see. I'll report each fill here.</div>
+   <div class="m u">And stop at 6pm.</div>
+   <div class="m a">Curfew set for 18:00. After that I hold and wait for you.</div>
+  </div>
+  <div class="limits"><div><small>PURSE</small><b>$300</b></div><div><small>PER ORDER</small><b>$75</b></div><div><small>STOCKS</small><b>3</b></div><div><small>CURFEW</small><b>18:00</b></div></div>
+ </div>
+</div></section>
+
+<section class="s" id="features" style="padding-top:0"><div class="wrap">
+ <div class="rv head"><div class="eyebrow">The ballroom</div><h2>Everything you'd do in the open, <em>masked.</em></h2></div>
+ <div class="grid">
+  <div class="rv f"><div class="ic">⇄</div><h3>Masked swaps</h3><p>Trade tokenized stocks and ETH from a single-use address.</p><span class="tag">CORE</span></div>
+  <div class="rv f"><div class="ic">⤳</div><h3>Masked bridge</h3><p>Arrive on Robinhood Chain straight into a fresh mask.</p><span class="tag">CORE</span></div>
+  <div class="rv f"><div class="ic">◎</div><h3>Envoys</h3><p>Budget-capped agents with curfews and stock whitelists.</p><span class="tag">CORE</span></div>
+  <div class="rv f"><div class="ic">▦</div><h3>Portfolios</h3><p>Bundle stocks into one basket, bought across several masks.</p><span class="tag">NEXT</span></div>
+  <div class="rv f"><div class="ic">◐</div><h3>Masked view</h3><p>See all your masks in one private dashboard, stored only in your browser.</p><span class="tag">NEXT</span></div>
+  <div class="rv f"><div class="ic">✦</div><h3>Mask labels</h3><p>Name your masks so you remember which one did what.</p><span class="tag">NEXT</span></div>
+ </div>
+</div></section>
+
+<section class="s" id="limits" style="padding-top:0"><div class="wrap">
+ <div class="rv head"><div class="eyebrow">Honest limits</div><h2>What a mask <em>can and can't</em> hide.</h2><p>Privacy on a public chain has edges. Here they are, up front.</p></div>
+ <div class="honest">
+  <div class="rv h y"><small>A MASK HIDES</small><ul><li>The link between a trade and your main wallet's history</li><li>Your full position across all masks, from casual chain readers</li><li>Which stocks your envoy is watching</li></ul></div>
+  <div class="rv h n"><small>A MASK DOES NOT HIDE</small><ul><li>The funding transaction itself, which is still on-chain</li><li>Timing patterns, if you fund and trade in the same minute</li><li>Anything you post publicly about your trades</li></ul></div>
+ </div>
+</div></section>
+
+<section class="s" id="token" style="padding-top:0"><div class="wrap">
+ <div class="rv tok">
+  <div><div class="eyebrow">The token</div><h2>$MASK</h2><p style="color:var(--mute);margin-top:12px">The ticket to the ball. Contract address goes live at launch.</p><div class="ca">CA · coming at launch <button disabled>COPY</button></div></div>
+  <div class="tl"><div><span>Chain</span><span>Robinhood Chain</span></div><div><span>Supply</span><span>TBA</span></div><div><span>Dev allocation</span><span>TBA</span></div><div><span>Liquidity</span><span>TBA</span></div></div>
+ </div>
+</div></section>
+
+<footer><div class="wrap">
+ <div><b class="serif" style="color:var(--ink);font-size:20px">Masquerade</b><br>Trade behind a mask. Not affiliated with Robinhood. Tokenized stocks are not shares. Not financial advice.</div>
+ <div class="mono">© 2026 · X · Docs · Terms</div>
+</div></footer>
+
+<div class="preview-tag">PREVIEW · UI ONLY</div>
+<div class="lsw" id="lsw"><button data-l="center">CENTER</button><button data-l="split">SPLIT</button></div>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import {mountMask} from './mask3d.js';
+const m=mountMask(document.getElementById('m3d'));
+if(!m)document.documentElement.classList.add('no-webgl');
+</script>
+<script>
+const T=['AAPL','NVDA','TSLA','MSFT','GOOGL','AMZN','META','SPY','QQQ','AMD','NFLX','COIN'];
+document.getElementById('tickrow').innerHTML=[...T,...T].map(x=>`<span><b>${x}</b>tradable behind a mask</span>`).join('');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*90+'ms';io.observe(el)});
+document.querySelectorAll('.step,.f').forEach(el=>el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mx',e.clientX-r.left+'px');el.style.setProperty('--my',e.clientY-r.top+'px')}));
+const r0=document.documentElement;
+const setL=l=>{r0.dataset.layout=l;localStorage.setItem('mq-layout',l);document.querySelectorAll('#lsw button').forEach(b=>b.classList.toggle('on',b.dataset.l===l))};
+setL(new URLSearchParams(location.search).get('layout')||localStorage.getItem('mq-layout')||'center');
+document.querySelectorAll('#lsw button').forEach(b=>b.onclick=()=>setL(b.dataset.l));
+const t=document.getElementById('tog'),r=document.documentElement;
+const set=m=>{r.dataset.theme=m;t.textContent=m==='night'?'☾':'☀';localStorage.setItem('mq-theme',m)};
+set(new URLSearchParams(location.search).get('theme')||localStorage.getItem('mq-theme')||'night');
+t.onclick=()=>set(r.dataset.theme==='night'?'day':'night');
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{document.getElementById('ask').value=c.textContent});
+</script>
+</body>
+</html>

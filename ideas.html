@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="brand/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta property="og:image" content="brand/mark-512.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Masquerade · design directions</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,500&family=Inter+Tight:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0b0b0d;color:#eee;font:400 16px/1.5 'Inter Tight',sans-serif}
+.top{max-width:1320px;margin:0 auto;padding:56px 32px 24px}
+.top h1{font:300 48px 'Fraunces',serif}.top h1 em{color:#d8b26a}
+.top p{color:#9a9a9a;margin-top:10px;max-width:760px}
+.idea{max-width:1320px;margin:0 auto 64px;padding:0 32px}
+.ih{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;gap:20px}
+.ih b{font:500 13px 'JetBrains Mono';letter-spacing:.2em;color:#d8b26a}
+.ih h2{font:400 30px 'Fraunces',serif;margin-top:4px}
+.ih p{color:#9a9a9a;font-size:14px;max-width:640px;margin-top:4px}
+.pick{padding:12px 22px;border-radius:999px;border:1px solid #444;background:transparent;color:#eee;cursor:pointer;font:500 14px 'Inter Tight';white-space:nowrap}
+.pick.on{background:#d8b26a;color:#111;border-color:#d8b26a}
+.frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid #2a2a2e}
+.stage{position:absolute;left:0;top:0;width:1440px;height:810px;transform-origin:0 0}
+.tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.tags span{font:500 11px 'JetBrains Mono';letter-spacing:.12em;color:#9a9a9a;border:1px solid #2a2a2e;padding:5px 10px;border-radius:999px}
+.bar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#16161a;border:1px solid #333;border-radius:999px;padding:10px 18px;font:500 13px 'JetBrains Mono';z-index:9}
+.bar b{color:#d8b26a}
+/* shared mask svg */
+.mk{display:block}
+
+/* ---------- A · GALA NOIR ---------- */
+.A{background:#120d0f;color:#f3ead9;font-family:'Inter Tight'}
+.A .glow{position:absolute;left:50%;bottom:-260px;width:1300px;height:620px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(216,178,106,.45),rgba(142,43,58,.55) 55%,transparent);filter:blur(50px)}
+.A nav{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:26px 80px}
+.A .lg{display:flex;gap:12px;align-items:center;font:500 24px 'Fraunces'}
+.A .pl{display:flex;gap:28px;padding:12px 26px;border:1px solid rgba(243,234,217,.12);border-radius:999px;background:rgba(255,255,255,.03);font-size:15px;color:#a89a88}
+.A .bt{padding:12px 22px;border-radius:999px;background:#8e2b3a;font-weight:500}
+.A .m3{position:absolute;left:50%;top:70px;width:520px;height:300px;transform:translateX(-50%)}
+.A h1{position:absolute;top:330px;left:0;right:0;text-align:center;font:300 92px/1.02 'Fraunces';letter-spacing:-.02em}
+.A h1 em{font-style:italic;background:linear-gradient(100deg,#b8873a,#f6dc98 45%,#c99a4a);-webkit-background-clip:text;color:transparent}
+.A .ld{position:absolute;top:540px;left:0;right:0;text-align:center;color:#a89a88;font-size:19px}
+.A .ask{position:absolute;top:610px;left:50%;transform:translateX(-50%);width:620px;display:flex;align-items:center;justify-content:space-between;padding:10px 10px 10px 26px;border-radius:999px;border:1px solid rgba(243,234,217,.14);background:rgba(18,13,15,.7);backdrop-filter:blur(10px);color:#a89a88}
+.A .ask span{padding:12px 22px;border-radius:999px;background:#8e2b3a;color:#f8eedd}
+
+/* ---------- B · CARNIVAL PAPER ---------- */
+.B{background:#f3ead8;color:#1c1412;font-family:'Cormorant Garamond'}
+.B:before{content:'';position:absolute;inset:18px;border:2px solid #1c1412;pointer-events:none}
+.B:after{content:'';position:absolute;inset:26px;border:1px solid #1c1412;pointer-events:none}
+.B nav{position:absolute;top:44px;left:60px;right:60px;display:flex;justify-content:space-between;align-items:center;font:500 13px 'JetBrains Mono';letter-spacing:.2em;text-transform:uppercase}
+.B .lg{font:700 30px 'Playfair Display';letter-spacing:.04em;text-transform:none}
+.B .issue{position:absolute;top:100px;left:60px;right:60px;display:flex;justify-content:space-between;border-top:1px solid #1c1412;border-bottom:1px solid #1c1412;padding:8px 0;font:500 12px 'JetBrains Mono';letter-spacing:.2em}
+.B h1{position:absolute;top:150px;left:60px;width:820px;font:400 118px/.92 'Playfair Display';letter-spacing:-.02em}
+.B h1 i{color:#8e1f2e}
+.B .col{position:absolute;top:520px;left:60px;width:400px;font-size:22px;line-height:1.35;column-count:1}
+.B .col:first-letter{float:left;font:700 72px/.8 'Playfair Display';margin:6px 10px 0 0;color:#8e1f2e}
+.B .col2{position:absolute;top:520px;left:500px;width:380px;font-size:20px;line-height:1.4;font-style:italic}
+.B .art{position:absolute;right:80px;top:160px;width:440px;height:520px;border:2px solid #1c1412;background:repeating-linear-gradient(45deg,transparent 0 14px,rgba(28,20,18,.06) 14px 15px);display:grid;place-items:center}
+.B .art .cap{position:absolute;bottom:-34px;left:0;font:italic 400 18px 'Cormorant Garamond'}
+.B .stamp{position:absolute;right:56px;bottom:70px;width:150px;height:150px;border-radius:50%;border:2px dashed #8e1f2e;color:#8e1f2e;display:grid;place-items:center;text-align:center;font:700 14px 'JetBrains Mono';letter-spacing:.14em;transform:rotate(-12deg)}
+.B .cta{position:absolute;left:60px;bottom:60px;padding:16px 30px;background:#1c1412;color:#f3ead8;font:500 14px 'JetBrains Mono';letter-spacing:.2em}
+
+/* ---------- C · MIDNIGHT GLASS ---------- */
+.C{background:radial-gradient(1200px 600px at 70% 20%,#16324a,transparent),radial-gradient(900px 500px at 10% 90%,#2a1640,transparent),#070a12;color:#e8f1ff;font-family:'Space Grotesk'}
+.C .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(circle at 60% 40%,#000,transparent 70%)}
+.C nav{position:absolute;top:28px;left:70px;right:70px;display:flex;justify-content:space-between;align-items:center}
+.C .lg{display:flex;align-items:center;gap:12px;font:700 22px 'Space Grotesk'}
+.C .pl{display:flex;gap:6px;padding:6px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:14px}
+.C .pl span{padding:8px 16px;border-radius:10px;color:#9fb2cc}.C .pl span:first-child{background:rgba(255,255,255,.1);color:#fff}
+.C .bt{padding:12px 20px;border-radius:12px;background:linear-gradient(90deg,#6ee7f9,#a78bfa);color:#0b1020;font-weight:700}
+.C h1{position:absolute;top:170px;left:70px;width:700px;font:700 84px/1 'Space Grotesk';letter-spacing:-.03em}
+.C h1 span{background:linear-gradient(90deg,#6ee7f9,#a78bfa,#f9a8d4);-webkit-background-clip:text;color:transparent}
+.C .ld{position:absolute;top:460px;left:70px;width:560px;color:#9fb2cc;font-size:19px}
+.C .card{position:absolute;right:80px;top:150px;width:520px;padding:26px;border-radius:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(16px);box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.C .card .row{display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:16px;background:rgba(0,0,0,.25);margin-bottom:10px}
+.C .card .row b{font:500 36px 'Space Grotesk'}.C .card small{color:#9fb2cc;display:block;font-size:13px}
+.C .card .tk{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.1);font-weight:500}
+.C .card .route{font:400 13px 'JetBrains Mono';color:#9fb2cc;margin:14px 0}
+.C .card .go{padding:16px;border-radius:14px;text-align:center;background:linear-gradient(90deg,#6ee7f9,#a78bfa);color:#0b1020;font-weight:700}
+.C .holo{position:absolute;right:250px;top:540px;width:230px;filter:drop-shadow(0 0 30px rgba(167,139,250,.6))}
+.C .stats{position:absolute;left:70px;bottom:80px;display:flex;gap:40px}.C .stats div{color:#9fb2cc;font-size:13px}.C .stats b{display:block;color:#fff;font-size:28px}
+
+/* ---------- D · OPERA STAGE ---------- */
+.D{background:#0a0506;color:#f6ead6;font-family:'Inter Tight'}
+.D .cur{position:absolute;top:0;bottom:0;width:300px;background:repeating-linear-gradient(90deg,#4a0d17 0 18px,#6e1422 18px 34px,#3a0910 34px 46px);box-shadow:inset -40px 0 60px rgba(0,0,0,.6)}
+.D .cur.l{left:0;border-radius:0 0 60% 0}.D .cur.r{right:0;transform:scaleX(-1);border-radius:0 0 60% 0}
+.D .val{position:absolute;top:0;left:0;right:0;height:70px;background:repeating-linear-gradient(90deg,#6e1422 0 40px,#4a0d17 40px 80px);border-bottom:6px solid #c9a24f;clip-path:polygon(0 0,100% 0,100% 70%,97% 100%,94% 70%,91% 100%,88% 70%,85% 100%,82% 70%,79% 100%,76% 70%,73% 100%,70% 70%,67% 100%,64% 70%,61% 100%,58% 70%,55% 100%,52% 70%,49% 100%,46% 70%,43% 100%,40% 70%,37% 100%,34% 70%,31% 100%,28% 70%,25% 100%,22% 70%,19% 100%,16% 70%,13% 100%,10% 70%,7% 100%,4% 70%,0 100%)}
+.D .spot{position:absolute;left:50%;top:-120px;width:760px;height:900px;transform:translateX(-50%);background:conic-gradient(from 160deg at 50% 0,transparent 0deg,rgba(255,236,190,.16) 20deg,rgba(255,236,190,.16) 40deg,transparent 60deg);filter:blur(6px)}
+.D .floor{position:absolute;left:0;right:0;bottom:0;height:130px;background:linear-gradient(#2a1208,#120704);border-top:4px solid #c9a24f}
+.D .floor:before{content:'';position:absolute;left:50%;top:0;width:520px;height:90px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,236,190,.35),transparent)}
+.D .m3{position:absolute;left:50%;top:120px;width:460px;height:270px;transform:translateX(-50%)}
+.D .bill{position:absolute;top:385px;left:0;right:0;text-align:center}
+.D .bill small{font:500 13px 'JetBrains Mono';letter-spacing:.4em;color:#c9a24f}
+.D .bill h1{font:400 84px/1 'Playfair Display';margin:10px 0;letter-spacing:.01em}
+.D .bill h1 i{color:#e6c378}
+.D .bill p{color:#c9b9a0;font-size:18px}
+.D .ticket{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);display:flex;align-items:center;gap:0;font:500 15px 'JetBrains Mono';letter-spacing:.12em}
+.D .ticket span{padding:16px 26px;background:#e6c378;color:#2a1208}.D .ticket span:last-child{background:transparent;color:#e6c378;border:2px dashed #e6c378;border-left:0}
+
+/* ---------- E · TERMINAL MONO ---------- */
+.E{background:#0c0c0c;color:#e6e6e6;font-family:'JetBrains Mono'}
+.E nav{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:22px 60px;border-bottom:1px solid #222;font-size:14px}
+.E nav b{color:#e9c46a}
+.E .l{position:absolute;top:110px;left:60px;width:760px}
+.E .l small{color:#e9c46a;letter-spacing:.2em}
+.E h1{font:800 104px/.95 'Inter Tight';letter-spacing:-.05em;margin:20px 0}
+.E h1 s{color:#555;text-decoration-thickness:6px}
+.E .l p{color:#999;font-size:17px;max-width:600px}
+.E .term{position:absolute;right:60px;top:110px;width:520px;border:1px solid #2a2a2a;background:#111}
+.E .term .h{padding:10px 14px;border-bottom:1px solid #2a2a2a;color:#666;font-size:12px;display:flex;gap:6px}.E .term .h i{width:10px;height:10px;border-radius:50%;background:#333;display:inline-block}
+.E .term pre{padding:18px;font:400 15px/1.8 'JetBrains Mono';color:#bbb;white-space:pre-wrap}
+.E .term pre b{color:#e9c46a;font-weight:500}.E .term pre em{color:#7fd39a;font-style:normal}
+.E .cur{display:inline-block;width:10px;height:18px;background:#e9c46a;vertical-align:middle;animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+.E .row{position:absolute;left:60px;right:60px;bottom:60px;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #222}
+.E .row div{padding:20px 0;border-right:1px solid #222;padding-left:18px;color:#777;font-size:12px;letter-spacing:.14em}.E .row div:last-child{border:0}.E .row b{display:block;color:#eee;font:700 30px 'Inter Tight';letter-spacing:-.02em;margin-top:6px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f3d58d"/><stop offset=".5" stop-color="#c79a4a"/><stop offset="1" stop-color="#8f6726"/></linearGradient>
+ <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#6ee7f9"/><stop offset=".5" stop-color="#a78bfa"/><stop offset="1" stop-color="#f9a8d4"/></linearGradient>
+ <symbol id="mk" viewBox="0 0 200 110"><path d="M100 30 C70 4 22 2 6 26 C-2 40 6 70 30 86 C52 100 80 92 100 70 C120 92 148 100 170 86 C194 70 202 40 194 26 C178 2 130 4 100 30Z"/><ellipse cx="56" cy="50" rx="24" ry="14" fill="#000" fill-opacity=".85" transform="rotate(-8 56 50)"/><ellipse cx="144" cy="50" rx="24" ry="14" fill="#000" fill-opacity=".85" transform="rotate(8 144 50)"/></symbol>
+</defs></svg>
+
+<div class="top"><h1>Five directions for <em>Masquerade</em></h1><p>Each one is a live hero mock at desktop size, scaled down. Same product, same copy idea, different personality. Press "Pick this" on the one you like; tell me in chat and I'll build the full site and app in that style.</p></div>
+
+<div class="idea" data-id="A">
+ <div class="ih"><div><b>A · GALA NOIR</b><h2>Refined dark luxury</h2><p>The current direction, polished: centered Ghostdex-like structure, 3D gold mask, wine glow from below, glass prompt bar. Safe, premium, close to what you have.</p></div><button class="pick">Pick this</button></div>
+ <div class="frame"><div class="stage A">
+  <div class="glow"></div>
+  <nav><div class="lg"><svg class="mk" width="40" height="22" style="fill:url(#g1)"><use href="#mk"/></svg>Masquerade</div><div class="pl"><span>How it works</span><span>Envoys</span><span>Features</span><span>$MASK</span></div><span class="bt">Enter the ball</span></nav>
+  <div class="m3" id="mA"></div>
+  <h1>Every trade<br>wears a <em>new mask.</em></h1>
+  <div class="ld">Trade tokenized stocks from addresses your main wallet never touches.</div>
+  <div class="ask">Buy $200 of TSLA if it opens red <span>Send an envoy</span></div>
+ </div></div>
+ <div class="tags"><span>DARK</span><span>SERIF</span><span>3D MASK</span><span>CENTERED</span></div>
+</div>
+
+<div class="idea" data-id="B">
+ <div class="ih"><div><b>B · CARNIVAL PAPER</b><h2>Venetian broadsheet</h2><p>A printed carnival programme: cream paper, double rule border, huge Playfair headline, drop cap, wax-stamp CA. Nothing else on Robinhood Chain looks like this; it stands out on the timeline.</p></div><button class="pick">Pick this</button></div>
+ <div class="frame"><div class="stage B">
+  <nav><span>Vol. I · Robinhood Chain</span><span class="lg">Masquerade</span><span>Enter the ball →</span></nav>
+  <div class="issue"><span>THE MASKED TRADER'S GAZETTE</span><span>TOKENIZED STOCKS · NO TRAIL</span><span>PRICE: ONE MASK</span></div>
+  <h1>Every trade wears a <i>new mask.</i></h1>
+  <div class="col">Your main wallet stays home. Each trade is made by a stranger in a fresh mask, and the stranger is you.</div>
+  <div class="col2">Send an envoy with a purse and a curfew. It cannot spend a coin more than it carries.</div>
+  <div class="art"><svg class="mk" width="340" height="190" style="fill:#8e1f2e"><use href="#mk"/></svg><span class="cap">Fig. 1 — a mask, worn once.</span></div>
+  <div class="stamp">$MASK<br>SEALED<br>AT LAUNCH</div>
+  <span class="cta">ENTER THE BALL</span>
+ </div></div>
+ <div class="tags"><span>LIGHT</span><span>EDITORIAL</span><span>PRINT TEXTURE</span><span>BOLD</span></div>
+</div>
+
+<div class="idea" data-id="C">
+ <div class="ih"><div><b>C · MIDNIGHT GLASS</b><h2>Crypto-native glassmorphism</h2><p>Deep navy with a faint grid, holographic gradient mask, a glass swap card right in the hero so people see the product instantly. Feels like a modern DEX.</p></div><button class="pick">Pick this</button></div>
+ <div class="frame"><div class="stage C">
+  <div class="grid"></div>
+  <nav><div class="lg"><svg class="mk" width="40" height="22" style="fill:url(#g2)"><use href="#mk"/></svg>masquerade</div><div class="pl"><span>Trade</span><span>Masks</span><span>Envoys</span><span>Bridge</span></div><span class="bt">Launch app</span></nav>
+  <h1>Trade stocks.<br><span>Wear a new mask</span><br>every time.</h1>
+  <div class="ld">Single-use addresses for every trade. Budget-capped agents that can't overspend.</div>
+  <svg class="mk holo" viewBox="0 0 200 110" style="fill:url(#g2)"><use href="#mk"/></svg>
+  <div class="card">
+   <div class="row"><div><small>You pay</small><b>250</b></div><span class="tk">USDG ▾</span></div>
+   <div class="row"><div><small>You receive</small><b>1.341</b></div><span class="tk">NVDA ▾</span></div>
+   <div class="route">main wallet → mask #4 ⇄ NVDA</div>
+   <div class="go">Put on a mask & swap</div>
+  </div>
+  <div class="stats"><div>NEW ADDRESS<b>Every trade</b></div><div>ENVOY OVERSPEND<b>Never</b></div><div>KEYS HELD<b>Zero</b></div></div>
+ </div></div>
+ <div class="tags"><span>DARK</span><span>GLASS</span><span>HOLOGRAPHIC</span><span>PRODUCT-FIRST</span></div>
+</div>
+
+<div class="idea" data-id="D">
+ <div class="ih"><div><b>D · OPERA STAGE</b><h2>Theatrical, memeable</h2><p>Red velvet curtains, gold valance, a spotlight on the 3D mask, a ticket stub as the CTA. Very strong for X content: every post can be "on stage".</p></div><button class="pick">Pick this</button></div>
+ <div class="frame"><div class="stage D">
+  <div class="spot"></div><div class="floor"></div><div class="cur l"></div><div class="cur r"></div><div class="val"></div>
+  <div class="m3" id="mD"></div>
+  <div class="bill"><small>TONIGHT ON ROBINHOOD CHAIN</small><h1>Every trade wears<br>a <i>new mask.</i></h1><p>Your wallet stays in the audience. A masked stranger trades on stage.</p></div>
+  <div class="ticket"><span>ADMIT ONE · ENTER THE BALL</span><span>$MASK</span></div>
+ </div></div>
+ <div class="tags"><span>DARK</span><span>THEATRE</span><span>3D MASK</span><span>CONTENT-FRIENDLY</span></div>
+</div>
+
+<div class="idea" data-id="E">
+ <div class="ih"><div><b>E · TERMINAL MONO</b><h2>Builder / hacker</h2><p>Black, monospace, a live terminal showing masks being created, one gold accent. Says "serious tool" rather than "meme". Fast to load, very legible.</p></div><button class="pick">Pick this</button></div>
+ <div class="frame"><div class="stage E">
+  <nav><span><b>◆ masquerade</b></span><span>trade · masks · envoys · docs</span><span><b>[ enter ]</b></span></nav>
+  <div class="l"><small>// TOKENIZED STOCKS · ROBINHOOD CHAIN</small><h1>Your wallet <s>trades</s><br>stays home.</h1><p>Every trade runs from a fresh, single-use address. Envoys get a purse and a curfew, and nothing more.</p></div>
+  <div class="term"><div class="h"><i></i><i></i><i></i>&nbsp;masquerade — zsh</div><pre>$ mask new
+<em>✓</em> derived mask #8  <b>0x4e1…a90c</b>
+$ mask fund 250 USDG --from main
+<em>✓</em> funded · main wallet not linked
+$ mask swap NVDA
+<em>✓</em> 1.3412 NVDA on mask #8
+$ envoy send contessa --purse 300 --curfew 18:00
+<em>✓</em> on duty · ceiling $300
+$ <span class="cur"></span></pre></div>
+  <div class="row"><div>NEW ADDRESS<b>every trade</b></div><div>OVERSPEND<b>impossible</b></div><div>KEYS HELD<b>0</b></div><div>CHAIN<b>robinhood</b></div></div>
+ </div></div>
+ <div class="tags"><span>DARK</span><span>MONOSPACE</span><span>MINIMAL</span><span>TOOL-FIRST</span></div>
+</div>
+
+<div class="bar">Picked: <b id="picked">none yet</b></div>
+
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import {mountMask} from './mask3d.js';
+mountMask(document.getElementById('mA'),{particles:true,interactive:true,dist:8.2});
+mountMask(document.getElementById('mD'),{particles:false,interactive:true,dist:8.2});
+</script>
+<script>
+// scale each 1440x810 stage to its frame
+const fit=()=>document.querySelectorAll('.frame').forEach(f=>{f.firstElementChild.style.transform=`scale(${f.clientWidth/1440})`});
+addEventListener('resize',fit);fit();
+const show=id=>{document.getElementById('picked').textContent=id?document.querySelector(`[data-id=${id}] .ih b`).textContent:'none yet';document.querySelectorAll('.idea').forEach(i=>i.querySelector('.pick').classList.toggle('on',i.dataset.id===id))};
+document.querySelectorAll('.idea').forEach(i=>i.querySelector('.pick').onclick=()=>{localStorage.setItem('mq-idea',i.dataset.id);show(i.dataset.id)});
+show(localStorage.getItem('mq-idea'));
+</script>
+</body>
+</html>

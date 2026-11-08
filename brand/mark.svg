@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+ <defs>
+  <linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f6e0a4"/><stop offset=".45" stop-color="#e2b864"/><stop offset="1" stop-color="#a87a2c"/></linearGradient>
+  <radialGradient id="v" cx=".5" cy=".38" r=".75"><stop offset="0" stop-color="#9a2033"/><stop offset=".6" stop-color="#5c0f1b"/><stop offset="1" stop-color="#2a060b"/></radialGradient>
+  <radialGradient id="spot" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#ffe9b8" stop-opacity=".35"/><stop offset=".6" stop-color="#ffe9b8" stop-opacity="0"/></radialGradient>
+  <linearGradient id="r" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d92a44"/><stop offset="1" stop-color="#7a0e1f"/></linearGradient>
+ <clipPath id="c"><rect width="512" height="512" rx="112"/></clipPath>
+ </defs>
+ <g clip-path="url(#c)">
+ <rect width="512" height="512" rx="112" fill="url(#v)"/>
+ <path d="M150 0 L362 0 L460 512 L52 512Z" fill="url(#spot)"/>
+ <!-- valance -->
+ <path d="M0 0H512V58 Q480 98 448 58 Q416 98 384 58 Q352 98 320 58 Q288 98 256 58 Q224 98 192 58 Q160 98 128 58 Q96 98 64 58 Q32 98 0 58Z" fill="#4a0b15"/>
+ <path d="M0 58 Q32 98 64 58 Q96 98 128 58 Q160 98 192 58 Q224 98 256 58 Q288 98 320 58 Q352 98 384 58 Q416 98 448 58 Q480 98 512 58" fill="none" stroke="url(#g)" stroke-width="8"/>
+ <!-- mask -->
+ <g transform="translate(56 176) scale(2)">
+  <path d="M100 30 C70 4 22 2 6 26 C-2 40 6 70 30 86 C52 100 80 92 100 70 C120 92 148 100 170 86 C194 70 202 40 194 26 C178 2 130 4 100 30Z" fill="url(#g)"/>
+  <path d="M100 30 C70 4 22 2 6 26 C-2 40 6 70 30 86 C52 100 80 92 100 70 C120 92 148 100 170 86 C194 70 202 40 194 26 C178 2 130 4 100 30Z" fill="none" stroke="#6b4a18" stroke-width="2.5"/>
+  <ellipse cx="56" cy="50" rx="24" ry="14" fill="#2a060b" transform="rotate(-8 56 50)"/>
+  <ellipse cx="144" cy="50" rx="24" ry="14" fill="#2a060b" transform="rotate(8 144 50)"/>
+  <path d="M16 28 Q38 14 62 24" fill="none" stroke="#fff6d8" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+  <path d="M184 28 Q162 14 138 24" fill="none" stroke="#fff6d8" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+  <path d="M100 32 L108 44 L100 58 L92 44Z" fill="url(#r)" stroke="#f6e0a4" stroke-width="1.5"/>
+ </g>
+ <!-- stage edge -->
+ <rect x="0" y="424" width="512" height="88" fill="#1a0904" opacity=".0"/>
+ <path d="M96 418 H416" stroke="#e2b864" stroke-width="6" stroke-linecap="round" opacity=".9"/>
+ <ellipse cx="256" cy="420" rx="120" ry="14" fill="#ffe9b8" opacity=".18"/>
+</g>
+</svg>

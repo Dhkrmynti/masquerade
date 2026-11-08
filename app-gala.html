@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="brand/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta property="og:image" content="brand/mark-512.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Masquerade · App</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120d0f;--bg2:#1b1416;--bg3:#231a1c;--ink:#f3ead9;--mute:#a89a88;--line:rgba(243,234,217,.11);--gold:#d8b26a;--wine:#8e2b3a;--wine2:#b33d50;--card:rgba(255,255,255,.03);--ok:#7fc795;--bad:#e07a6a}
+[data-theme=day]{--bg:#f4ecdc;--bg2:#ebe0ca;--bg3:#e2d5bb;--ink:#1d1416;--mute:#6f5f52;--line:rgba(29,20,22,.13);--gold:#9a7230;--wine:#7a1f2e;--wine2:#9a2b3d;--card:rgba(255,255,255,.55);--ok:#2f8a4e;--bad:#b04a3a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.55 'Inter Tight',system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;transition:background .4s,color .4s}
+body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.045;background-image:radial-gradient(circle at 25% 25%,var(--gold) 1.2px,transparent 1.6px),radial-gradient(circle at 75% 75%,var(--gold) 1.2px,transparent 1.6px);background-size:28px 28px}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}
+.mono{font-family:'JetBrains Mono',monospace}.serif{font-family:'Fraunces',serif}
+/* demo banner */
+.demo{background:var(--gold);color:#1d1416;text-align:center;font:500 12px 'JetBrains Mono';letter-spacing:.14em;padding:7px}
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 26px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 82%,transparent)}
+.logo{display:flex;align-items:center;gap:10px;font:500 20px 'Fraunces',serif}.logo svg{width:34px;height:20px}
+.tr{display:flex;gap:10px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font:500 13px 'JetBrains Mono';color:var(--mute)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:999px;border:1px solid transparent;cursor:pointer;font:500 14px 'Inter Tight';transition:transform .15s,background .2s,opacity .2s}
+.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.p{background:var(--wine);color:#f8eedd}.btn.p:hover{background:var(--wine2)}
+.btn.g{border-color:var(--line);background:transparent}
+.btn.w{width:100%;padding:15px;font-size:16px;border-radius:16px}
+.tog{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:transparent;cursor:pointer}
+/* layout */
+.shell{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 100px)}
+aside{border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:4px}
+aside a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;color:var(--mute);font-weight:500;transition:background .2s,color .2s}
+aside a:hover{color:var(--ink);background:var(--card)}
+aside a.on{color:var(--ink);background:color-mix(in srgb,var(--wine) 26%,transparent)}
+aside a span{width:22px;text-align:center;color:var(--gold)}
+aside .sep{height:1px;background:var(--line);margin:14px 6px}
+aside .mini{margin-top:auto;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--card);font-size:13px;color:var(--mute)}
+aside .mini b{display:block;color:var(--ink);font:500 22px 'Fraunces',serif;margin:4px 0}
+main{padding:30px 34px 60px;max-width:1240px;width:100%}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px;gap:20px}
+.ph h1{font:300 40px/1.1 'Fraunces',serif}.ph h1 em{font-style:italic;color:var(--gold)}
+.ph p{color:var(--mute);margin-top:6px}
+.panel{display:none}.panel.on{display:block;animation:in .4s ease}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.box{border:1px solid var(--line);border-radius:22px;background:var(--bg2)}
+.lab{font:500 11px 'JetBrains Mono';letter-spacing:.18em;color:var(--mute);text-transform:uppercase}
+/* trade */
+.trade{display:grid;grid-template-columns:1fr 380px;gap:22px}
+.swap{padding:22px}
+.leg{border:1px solid var(--line);border-radius:18px;padding:16px 18px;background:var(--card)}
+.leg .row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.leg input{width:60%;background:transparent;border:0;outline:0;font:300 34px 'Fraunces',serif;color:var(--ink)}
+.sel{display:flex;align-items:center;gap:8px;padding:8px 12px 8px 8px;border-radius:999px;border:1px solid var(--line);background:var(--bg3);cursor:pointer;font-weight:600}
+.sel i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:600 10px 'JetBrains Mono';font-style:normal;color:#1d1416}
+.leg small{color:var(--mute);font-size:13px}
+.flip{display:grid;place-items:center;margin:-10px auto;position:relative;z-index:2;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);cursor:pointer;color:var(--gold)}
+.route{margin-top:16px;border:1px dashed color-mix(in srgb,var(--gold) 45%,transparent);border-radius:16px;padding:14px 16px}
+.route .flow{display:flex;align-items:center;gap:10px;margin-top:10px;font:400 13px 'JetBrains Mono';flex-wrap:wrap}
+.route .flow span{padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg3)}
+.route .flow b{color:var(--gold);font-weight:500}
+.sw{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.switch{width:44px;height:24px;border-radius:12px;background:var(--wine);position:relative;cursor:pointer;border:0}
+.switch:after{content:'';position:absolute;top:3px;left:23px;width:18px;height:18px;border-radius:50%;background:#f8eedd;transition:left .2s}
+.switch.off{background:var(--bg3)}.switch.off:after{left:3px}
+.qt{margin:16px 0;display:grid;gap:8px;font-size:14px}.qt div{display:flex;justify-content:space-between;color:var(--mute)}.qt b{color:var(--ink);font-weight:500}
+.side{display:grid;gap:22px;align-content:start}
+.next{overflow:hidden;position:relative}
+.next .m3{height:210px;position:relative;background:radial-gradient(circle at 50% 55%,color-mix(in srgb,var(--wine) 35%,transparent),transparent 65%)}
+.next .m3 svg.fb{display:none;width:60%;margin:40px auto}
+.no-webgl .next .m3 svg.fb{display:block}
+.next .info{padding:16px 20px;border-top:1px solid var(--line)}
+.next .info b{font:500 16px 'JetBrains Mono';color:var(--gold)}
+.steps{padding:18px 20px;display:grid;gap:10px}
+.st{display:flex;align-items:center;gap:12px;color:var(--mute);font-size:14px}
+.st i{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font:500 11px 'JetBrains Mono';font-style:normal}
+.st.run{color:var(--ink)}.st.run i{border-color:var(--gold);color:var(--gold);animation:pulse 1s infinite}
+.st.done{color:var(--ink)}.st.done i{background:var(--ok);border-color:var(--ok);color:#10200f}
+@keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--gold) 20%,transparent)}}
+/* tables / lists */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;padding:14px 20px;border-bottom:1px solid var(--line)}
+.tbl td{padding:16px 20px;border-bottom:1px solid var(--line);font-size:14px}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr{transition:background .2s}.tbl tbody tr:hover{background:var(--card)}
+.tag{font:500 11px 'JetBrains Mono';letter-spacing:.12em;padding:4px 9px;border-radius:999px;border:1px solid var(--line)}
+.tag.a{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}.tag.r{color:var(--mute)}
+.lnk{color:var(--gold);cursor:pointer;font-size:13px;margin-right:14px;background:none;border:0}
+.new{animation:flash 1.6s ease}@keyframes flash{0%{background:color-mix(in srgb,var(--gold) 25%,transparent)}}
+/* envoys */
+.env{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.ecards{display:grid;gap:14px}
+.ec{padding:18px 20px;cursor:pointer;transition:border-color .2s,transform .2s}
+.ec:hover{transform:translateY(-2px)}.ec.picked{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.ec .hd{display:flex;justify-content:space-between;align-items:center}
+.ec .who{display:flex;gap:12px;align-items:center}.ec .av{width:40px;height:40px;border-radius:50%;background:var(--wine);display:grid;place-items:center}
+.ec .who b{display:block;font:500 18px 'Fraunces',serif}.ec small{color:var(--mute);font-size:13px}
+.bar{height:6px;border-radius:3px;background:var(--bg3);margin:14px 0 8px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--wine2));border-radius:3px}
+.ec .meta{display:flex;justify-content:space-between;font:400 12px 'JetBrains Mono';color:var(--mute)}
+.chat{display:flex;flex-direction:column;height:560px}
+.chat .hd{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.msgs{flex:1;overflow:auto;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:84%;padding:11px 15px;border-radius:16px;font-size:14px;animation:in .3s ease}
+.m.u{align-self:flex-end;background:var(--wine);color:#f8eedd;border-bottom-right-radius:4px}
+.m.a{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px}
+.m.sys{align-self:center;font:400 12px 'JetBrains Mono';color:var(--mute);background:none;padding:4px}
+.chat form{display:flex;gap:8px;padding:14px;border-top:1px solid var(--line)}
+.chat input{flex:1;padding:12px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);outline:0;color:var(--ink);font:inherit}
+.form{padding:22px;display:grid;gap:14px}
+.form label{display:grid;gap:6px;font-size:13px;color:var(--mute)}
+.form input,.form select,.form textarea{padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;outline:0}
+.form input:focus,.form textarea:focus{border-color:var(--gold)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font:500 12px 'JetBrains Mono';color:var(--mute)}
+.chips button.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+/* portfolio */
+.port{display:grid;grid-template-columns:340px 1fr;gap:22px}
+.donut{padding:24px;display:grid;place-items:center;position:relative}
+.donut .c{position:absolute;text-align:center}.donut .c b{display:block;font:300 34px 'Fraunces',serif}
+.legend{display:grid;gap:8px;padding:0 24px 24px}.legend div{display:flex;justify-content:space-between;font-size:14px}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px}
+.kpi{padding:18px 20px}.kpi b{display:block;font:300 30px 'Fraunces',serif;margin-top:6px}
+/* activity */
+.act{padding:6px 0}.act div{display:flex;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--line);font-size:14px}.act div:last-child{border:0}.act small{color:var(--mute);font:400 12px 'JetBrains Mono'}
+/* sheet (token picker) */
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:50;backdrop-filter:blur(4px)}
+.sheet.on{display:grid}
+.sheet .box{width:380px;padding:18px;max-height:70vh;overflow:auto}
+.sheet .it{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:12px;cursor:pointer}.sheet .it:hover{background:var(--card)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg3);border:1px solid var(--gold);padding:12px 18px;border-radius:14px;z-index:60;transition:transform .3s;font-size:14px}
+.toast.on{transform:translateX(-50%) translateY(0)}
+@media (max-width:1000px){.shell{grid-template-columns:1fr}aside{flex-direction:row;overflow:auto;border-right:0;border-bottom:1px solid var(--line)}aside .sep,aside .mini{display:none}.trade,.env,.port{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f3d58d"/><stop offset=".5" stop-color="#c79a4a"/><stop offset="1" stop-color="#8f6726"/></linearGradient>
+ <symbol id="mask" viewBox="0 0 200 110"><path d="M100 30 C70 4 22 2 6 26 C-2 40 6 70 30 86 C52 100 80 92 100 70 C120 92 148 100 170 86 C194 70 202 40 194 26 C178 2 130 4 100 30Z" fill="url(#gold)" stroke="#6b4a18" stroke-width="2"/><ellipse cx="56" cy="50" rx="24" ry="14" fill="#120d0f" transform="rotate(-8 56 50)"/><ellipse cx="144" cy="50" rx="24" ry="14" fill="#120d0f" transform="rotate(8 144 50)"/><circle cx="100" cy="44" r="5" fill="#8e2b3a"/></symbol>
+</defs></svg>
+
+<div class="demo">PREVIEW · DEMO DATA · NO WALLET CONNECTION · NO REAL TRANSACTIONS</div>
+<div class="top">
+ <a class="logo" href="preview.html"><svg viewBox="0 0 200 110"><use href="#mask"/></svg>Masquerade</a>
+ <div class="tr"><span class="pill"><i></i>Robinhood Chain</span><button class="tog" id="tog">☾</button><button class="btn p" id="conn">Connect wallet</button></div>
+</div>
+
+<div class="shell">
+ <aside>
+  <a href="#trade" data-p="trade"><span>⇄</span>Trade</a>
+  <a href="#masks" data-p="masks"><span>◉</span>Masks</a>
+  <a href="#envoys" data-p="envoys"><span>◎</span>Envoys</a>
+  <a href="#bridge" data-p="bridge"><span>⤳</span>Bridge</a>
+  <a href="#portfolio" data-p="portfolio"><span>◐</span>Portfolio</a>
+  <div class="sep"></div>
+  <a href="preview.html"><span>↖</span>Back to site</a>
+  <div class="mini"><span class="lab">Active masks</span><b id="miniCount">3</b>main wallet untouched since you arrived</div>
+ </aside>
+
+ <main>
+  <!-- TRADE -->
+  <section class="panel" id="p-trade">
+   <div class="ph"><div><h1>Trade <em>behind a mask</em></h1><p>Each swap runs from a fresh address funded by your wallet.</p></div></div>
+   <div class="trade">
+    <div class="box swap">
+     <div class="leg"><span class="lab">You pay</span><div class="row"><input id="amt" value="250" inputmode="decimal"><button class="sel" data-pick="from"><i id="fromIc" style="background:#7fc795">$</i><span id="fromSym">USDG</span> ▾</button></div><small id="fromBal">Balance 1,240.00 USDG</small></div>
+     <button class="flip" id="flip" title="Flip">⇅</button>
+     <div class="leg"><span class="lab">You receive</span><div class="row"><input id="out" readonly><button class="sel" data-pick="to"><i id="toIc" style="background:#d8b26a">N</i><span id="toSym">NVDA</span> ▾</button></div><small id="toPx">1 NVDA ≈ 186.40 USDG</small></div>
+     <div class="route">
+      <span class="lab">Route</span>
+      <div class="flow" id="flow"><span>main wallet</span><b>→</b><span>new mask <b id="nextId">#4</b></span><b>⇄</b><span id="flowTo">NVDA</span></div>
+      <div class="sw"><span style="font-size:14px">Trade from a new mask</span><button class="switch" id="maskSw"></button></div>
+     </div>
+     <div class="qt"><div><span>Price impact</span><b id="impact">0.08%</b></div><div><span>Network fee</span><b>~$0.01</b></div><div><span>Mask funding</span><b id="fund">250.00 USDG → #4</b></div></div>
+     <button class="btn p w" id="go">Connect wallet to trade</button>
+    </div>
+    <div class="side">
+     <div class="box next"><div class="m3" id="m3"><svg class="fb" viewBox="0 0 200 110"><use href="#mask"/></svg></div>
+      <div class="info"><span class="lab">Your next mask</span><br><b id="nextAddr">0x…</b><div style="color:var(--mute);font-size:13px;margin-top:4px">Derived for this trade only. No history, no link to your main wallet.</div></div></div>
+     <div class="box"><div style="padding:16px 20px 0" class="lab">What happens when you trade</div>
+      <div class="steps" id="steps"><div class="st"><i>1</i>Derive a fresh mask</div><div class="st"><i>2</i>Fund it from your wallet</div><div class="st"><i>3</i>Swap from the mask</div><div class="st"><i>4</i>Position lives on the mask</div></div></div>
+    </div>
+   </div>
+  </section>
+
+  <!-- MASKS -->
+  <section class="panel" id="p-masks">
+   <div class="ph"><div><h1>Your <em>masks</em></h1><p>Every address you've traded from. Only you can see this list; it lives in this browser.</p></div><button class="btn g" onclick="go('trade')">+ New masked trade</button></div>
+   <div class="box"><table class="tbl"><thead><tr><th class="lab">Mask</th><th class="lab">Address</th><th class="lab">Holding</th><th class="lab">Value</th><th class="lab">Status</th><th></th></tr></thead><tbody id="maskRows"></tbody></table></div>
+  </section>
+
+  <!-- ENVOYS -->
+  <section class="panel" id="p-envoys">
+   <div class="ph"><div><h1>Your <em>envoys</em></h1><p>Agents with a purse, a curfew and a list of stocks. The purse is the hard limit.</p></div><button class="btn p" id="newEnvBtn">+ New envoy</button></div>
+   <div class="env">
+    <div><div class="ecards" id="ecards"></div>
+     <div class="box form" id="envForm" style="display:none;margin-top:14px">
+      <span class="lab">New envoy</span>
+      <label>Name<input id="eName" value="The Duke"></label>
+      <div class="two"><label>Purse (USDG)<input id="ePurse" value="400"></label><label>Per order (USDG)<input id="eOrder" value="100"></label></div>
+      <label>Stocks<div class="chips" id="eStocks"></div></label>
+      <div class="two"><label>Curfew<input id="eCurfew" type="time" value="18:00"></label><label>Mask<input value="new mask, auto" disabled></label></div>
+      <label>Instruction<textarea id="eInst" rows="2">Buy AMD if it drops 3% today.</textarea></label>
+      <div class="two"><button class="btn g" id="eCancel">Cancel</button><button class="btn p" id="eCreate">Fund & send envoy</button></div>
+     </div>
+    </div>
+    <div class="box chat"><div class="hd"><div><b class="serif" style="font-size:18px" id="cName">The Contessa</b><br><small style="color:var(--mute)" id="cSub"></small></div><span class="tag a" id="cState">ON DUTY</span></div>
+     <div class="msgs" id="msgs"></div>
+     <form id="cForm"><input id="cIn" placeholder="Tell your envoy what to do…"><button class="btn p">Send</button></form></div>
+   </div>
+  </section>
+
+  <!-- BRIDGE -->
+  <section class="panel" id="p-bridge">
+   <div class="ph"><div><h1>Arrive <em>masked</em></h1><p>Bridge onto Robinhood Chain straight into a fresh mask.</p></div></div>
+   <div class="trade"><div class="box swap">
+    <div class="leg"><span class="lab">From</span><div class="row"><input value="0.10"><button class="sel"><i style="background:#9fb3e0">E</i>Ethereum · ETH</button></div><small>Balance 0.84 ETH</small></div>
+    <div class="flip">↓</div>
+    <div class="leg"><span class="lab">To</span><div class="row"><input value="0.0998" readonly><button class="sel"><i style="background:#7fc795">R</i>Robinhood · ETH</button></div><small>arrives in new mask <b style="color:var(--gold)" id="bMask">#4</b></small></div>
+    <div class="qt"><div><span>Bridge time</span><b>~2 min</b></div><div><span>Fee</span><b>~0.0002 ETH</b></div></div>
+    <button class="btn p w" id="bGo">Bridge into a mask</button></div>
+    <div class="side"><div class="box" style="padding:20px"><span class="lab">Why bridge into a mask?</span><p style="color:var(--mute);margin-top:10px">If funds land in your main wallet first, the bridge links your other-chain history to everything you do next. Landing in a mask keeps that link out of your trades.</p></div></div>
+   </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="panel" id="p-portfolio">
+   <div class="ph"><div><h1>All masks, <em>one view</em></h1><p>Totals across every mask. Computed in this browser only.</p></div></div>
+   <div class="kpis"><div class="box kpi"><span class="lab">Total value</span><b id="kTot">$0</b></div><div class="box kpi"><span class="lab">Masks</span><b id="kMasks">0</b></div><div class="box kpi"><span class="lab">Envoy purses</span><b id="kEnv">$0</b></div></div>
+   <div class="port"><div class="box"><div class="donut"><canvas id="donut" width="260" height="260"></canvas><div class="c"><span class="lab">Positions</span><b id="dTot">$0</b></div></div><div class="legend" id="legend"></div></div>
+    <div class="box"><div style="padding:16px 20px;border-bottom:1px solid var(--line)" class="lab">Activity</div><div class="act" id="act"></div></div></div>
+  </section>
+ </main>
+</div>
+
+<div class="sheet" id="sheet"><div class="box"><div class="lab" style="padding:4px 8px 10px">Select asset</div><div id="list"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import {mountMask} from './mask3d.js';
+const m=mountMask(document.getElementById('m3'),{particles:true,interactive:true,dist:8.6});
+if(!m)document.documentElement.classList.add('no-webgl');
+</script>
+<script>
+// ---- demo state (fake prices, labelled as demo in the banner) ----
+const A={USDG:{px:1,c:'#7fc795',i:'$'},NVDA:{px:186.4,c:'#d8b26a',i:'N'},AAPL:{px:231.8,c:'#c9c3ba',i:'A'},TSLA:{px:248.1,c:'#e07a6a',i:'T'},MSFT:{px:422.6,c:'#9fb3e0',i:'M'},GOOGL:{px:171.2,c:'#b9e08f',i:'G'},AMZN:{px:198.3,c:'#f0b36a',i:'Z'},AMD:{px:162.9,c:'#c78fd8',i:'D'},SPY:{px:589.4,c:'#8fd8c9',i:'S'},QQQ:{px:507.7,c:'#d88fa5',i:'Q'}};
+const S={conn:false,from:'USDG',to:'NVDA',mask:true,masks:[
+ {id:1,addr:rnd(),sym:'AAPL',qty:1.2,st:'active',t:'2d ago'},
+ {id:2,addr:rnd(),sym:'SPY',qty:0.5,st:'active',t:'1d ago'},
+ {id:3,addr:rnd(),sym:'TSLA',qty:0.8,st:'retired',t:'5h ago'}],
+ envoys:[{name:'The Contessa',purse:300,used:120,order:75,stocks:['AAPL','MSFT','GOOGL'],curfew:'18:00',inst:'If big tech dips 2% today, pick up some MSFT. Stay under $300.',log:[]},
+  {name:'The Jester',purse:150,used:0,order:50,stocks:['TSLA'],curfew:'16:30',inst:'DCA $50 into TSLA at the open, three days in a row.',log:[]}],
+ sel:0,act:[['Masked swap 250 USDG → 1.08 AAPL','mask #1 · 2d'],['Masked swap 295 USDG → 0.5 SPY','mask #2 · 1d'],['Retired mask #3','5h']]};
+function rnd(){return '0x'+[...crypto.getRandomValues(new Uint8Array(20))].map(b=>b.toString(16).padStart(2,'0')).join('')}
+const short=a=>a.slice(0,6)+'…'+a.slice(-4);
+const $=id=>document.getElementById(id);
+const toast=m=>{$('toast').textContent=m;$('toast').classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('on'),2600)};
+let nextAddr=rnd();
+// ---- theme ----
+const setT=m=>{document.documentElement.dataset.theme=m;$('tog').textContent=m==='night'?'☾':'☀';localStorage.setItem('mq-theme',m)};
+setT(localStorage.getItem('mq-theme')||'night');$('tog').onclick=()=>setT(document.documentElement.dataset.theme==='night'?'day':'night');
+// ---- nav ----
+function go(p){document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('on',x.id==='p-'+p));document.querySelectorAll('aside a[data-p]').forEach(a=>a.classList.toggle('on',a.dataset.p===p));if(location.hash!=='#'+p)history.replaceState(null,'','#'+p);if(p==='portfolio')renderPort()}
+addEventListener('hashchange',()=>go(location.hash.slice(1)||'trade'));
+// ---- connect (demo) ----
+$('conn').onclick=()=>{S.conn=!S.conn;$('conn').textContent=S.conn?'0x7a2f…3c1e · demo':'Connect wallet';$('conn').className='btn '+(S.conn?'g':'p');quote();toast(S.conn?'Demo wallet connected. No real wallet was touched.':'Disconnected')};
+// ---- trade ----
+function nextId(){return Math.max(...S.masks.map(m=>m.id))+1}
+function quote(){const a=parseFloat($('amt').value)||0;const o=a*A[S.from].px/A[S.to].px;$('out').value=o?o.toFixed(4):'';
+ $('fromSym').textContent=S.from;$('toSym').textContent=S.to;$('fromIc').textContent=A[S.from].i;$('fromIc').style.background=A[S.from].c;$('toIc').textContent=A[S.to].i;$('toIc').style.background=A[S.to].c;
+ $('toPx').textContent=`1 ${S.to} ≈ ${(A[S.to].px/A[S.from].px).toFixed(S.from==='USDG'?2:4)} ${S.from}`;
+ $('impact').textContent=(Math.min(2,a/30000)*100/100+.04).toFixed(2)+'%';
+ const n=nextId();$('nextId').textContent='#'+n;$('bMask').textContent='#'+n;$('flowTo').textContent=S.to;
+ $('flow').innerHTML=S.mask?`<span>main wallet</span><b>→</b><span>new mask <b>#${n}</b></span><b>⇄</b><span>${S.to}</span>`:`<span>main wallet</span><b>⇄</b><span>${S.to}</span><span style="border-color:var(--bad);color:var(--bad)">visible on your wallet</span>`;
+ $('fund').textContent=S.mask?`${a.toFixed(2)} ${S.from} → #${n}`:'none, trades from main wallet';
+ $('nextAddr').textContent=S.mask?short(nextAddr):'masking off';
+ $('go').textContent=!S.conn?'Connect wallet to trade':S.mask?'Put on a mask & swap':'Swap from main wallet';}
+$('amt').oninput=quote;
+$('flip').onclick=()=>{[S.from,S.to]=[S.to,S.from];quote()};
+$('maskSw').onclick=()=>{S.mask=!S.mask;$('maskSw').classList.toggle('off',!S.mask);quote()};
+document.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{const side=b.dataset.pick;$('list').innerHTML=Object.keys(A).map(k=>`<div class="it" data-k="${k}"><span><i style="display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:${A[k].c};color:#1d1416;font:600 10px JetBrains Mono;margin-right:10px;font-style:normal">${A[k].i}</i>${k}</span><span class="mono" style="color:var(--mute)">${A[k].px.toFixed(2)}</span></div>`).join('');
+ $('sheet').classList.add('on');$('list').querySelectorAll('.it').forEach(it=>it.onclick=()=>{if(side==='from')S.from=it.dataset.k;else S.to=it.dataset.k;if(S.from===S.to)S[side==='from'?'to':'from']=S.from==='USDG'?'NVDA':'USDG';$('sheet').classList.remove('on');quote()})});
+$('sheet').onclick=e=>{if(e.target.id==='sheet')$('sheet').classList.remove('on')};
+$('go').onclick=async()=>{if(!S.conn){$('conn').click();return}
+ const a=parseFloat($('amt').value)||0;if(!a){toast('Enter an amount');return}
+ $('go').disabled=true;const st=[...$('steps').children];st.forEach(s=>s.className='st');
+ const n=nextId(),addr=nextAddr;
+ for(let i=0;i<4;i++){if(!S.mask&&i<2){st[i].className='st done';continue}st[i].className='st run';await new Promise(r=>setTimeout(r,650));st[i].className='st done'}
+ const qty=a*A[S.from].px/A[S.to].px;
+ if(S.mask){S.masks.unshift({id:n,addr,sym:S.to,qty,st:'active',t:'just now',fresh:true});nextAddr=rnd()}
+ S.act.unshift([`${S.mask?'Masked swap':'Swap'} ${a} ${S.from} → ${qty.toFixed(4)} ${S.to}`,S.mask?`mask #${n} · now`:'main wallet · now']);
+ renderMasks();quote();$('go').disabled=false;toast(S.mask?`Done. ${qty.toFixed(4)} ${S.to} now lives on mask #${n} (demo).`:'Done (demo).')};
+// ---- masks ----
+function renderMasks(){$('maskRows').innerHTML=S.masks.map(m=>`<tr class="${m.fresh?'new':''}"><td><b class="serif" style="font-size:17px">#${m.id}</b><br><small style="color:var(--mute)">${m.t}</small></td><td class="mono">${short(m.addr)}</td><td>${m.st==='active'?m.qty.toFixed(4)+' '+m.sym:'—'}</td><td>${m.st==='active'?'$'+(m.qty*A[m.sym].px).toFixed(2):'—'}</td><td><span class="tag ${m.st==='active'?'a':'r'}">${m.st.toUpperCase()}</span></td><td style="text-align:right">${m.st==='active'?`<button class="lnk" onclick="retire(${m.id},'home')">Bring home</button><button class="lnk" onclick="retire(${m.id},'retire')">Retire</button>`:''}</td></tr>`).join('');
+ S.masks.forEach(m=>m.fresh=false);$('miniCount').textContent=S.masks.filter(m=>m.st==='active').length}
+function retire(id,how){const m=S.masks.find(x=>x.id===id);m.st='retired';S.act.unshift([how==='home'?`Brought mask #${id} home: ${m.qty.toFixed(4)} ${m.sym} → main wallet`:`Retired mask #${id}`,'now']);renderMasks();toast(how==='home'?'Moved to main wallet (demo). This links the mask to you.':'Mask retired (demo).')}
+// ---- envoys ----
+const STK=Object.keys(A).filter(k=>k!=='USDG');let eSel=['AMD'];
+$('eStocks').innerHTML=STK.map(k=>`<button type="button" data-k="${k}">${k}</button>`).join('');
+const paintChips=()=>$('eStocks').querySelectorAll('button').forEach(b=>b.classList.toggle('on',eSel.includes(b.dataset.k)));paintChips();
+$('eStocks').onclick=e=>{const k=e.target.dataset.k;if(!k)return;eSel=eSel.includes(k)?eSel.filter(x=>x!==k):[...eSel,k];paintChips()};
+$('newEnvBtn').onclick=()=>{$('envForm').style.display='grid'};$('eCancel').onclick=()=>{$('envForm').style.display='none'};
+$('eCreate').onclick=()=>{const purse=+$('ePurse').value||0,order=+$('eOrder').value||0;if(!eSel.length){toast('Pick at least one stock');return}if(order>purse){toast('Per order can\'t exceed the purse');return}
+ S.envoys.unshift({name:$('eName').value||'Envoy',purse,used:0,order,stocks:[...eSel],curfew:$('eCurfew').value,inst:$('eInst').value,log:[]});S.sel=0;$('envForm').style.display='none';
+ S.act.unshift([`Sent ${$('eName').value} with a $${purse} purse`,'now']);renderEnv();toast('Envoy funded and on duty (demo).')};
+function renderEnv(){$('ecards').innerHTML=S.envoys.map((e,i)=>`<div class="box ec ${i===S.sel?'picked':''}" onclick="S.sel=${i};renderEnv()"><div class="hd"><div class="who"><div class="av"><svg viewBox="0 0 200 110" width="26"><use href="#mask"/></svg></div><div><b>${e.name}</b><small>${e.stocks.join(' · ')}</small></div></div><span class="tag a">ON DUTY</span></div><div class="bar"><i style="width:${e.used/e.purse*100}%"></i></div><div class="meta"><span>$${e.used} of $${e.purse} spent</span><span>max $${e.order}/order · curfew ${e.curfew}</span></div></div>`).join('');
+ const e=S.envoys[S.sel];$('cName').textContent=e.name;$('cSub').textContent=`purse $${e.purse} · ${e.stocks.join(', ')} · curfew ${e.curfew}`;
+ if(!e.log.length)e.log=[['sys',`${e.name} received a mask with $${e.purse}. That is everything it can spend.`],['u',e.inst],['a',reply(e,e.inst)]];
+ $('msgs').innerHTML=e.log.map(([w,t])=>`<div class="m ${w}">${t}</div>`).join('');$('msgs').scrollTop=1e9}
+function reply(e,t){const left=e.purse-e.used;const s=t.toUpperCase();const named=STK.filter(k=>s.includes(k));const off=named.filter(k=>!e.stocks.includes(k));
+ const money=(t.match(/\$?(\d{2,6})/)||[])[1];
+ if(/STOP|HOME|CANCEL/.test(s))return `Understood. I'll stop and send the $${left} left in my mask back to you.`;
+ if(off.length)return `${off.join(', ')} isn't on my list (${e.stocks.join(', ')}). I can't touch it unless you add it.`;
+ if(money&&+money>left)return e.used?`I've already spent $${e.used}, so $${left} is what's left in my mask. That's the most I can spend now, whatever happens.`:`That's more than my purse. I hold $${left}, so $${left} is the most I can spend, whatever happens.`;
+ return `Noted. I'll watch ${named.length?named.join(', '):e.stocks.join(', ')}, keep each order under $${e.order}, and stop at ${e.curfew}. $${left} is my ceiling.`}
+$('cForm').onsubmit=ev=>{ev.preventDefault();const t=$('cIn').value.trim();if(!t)return;const e=S.envoys[S.sel];e.log.push(['u',t]);$('cIn').value='';renderEnv();setTimeout(()=>{e.log.push(['a',reply(e,t)]);renderEnv()},600)};
+// ---- bridge ----
+$('bGo').onclick=()=>{if(!S.conn){$('conn').click();return}const n=nextId();S.masks.unshift({id:n,addr:nextAddr,sym:'USDG',qty:0.0998*3400,st:'active',t:'just now',fresh:true});nextAddr=rnd();S.act.unshift([`Bridged 0.10 ETH into mask #${n}`,'now']);renderMasks();quote();toast(`Bridge started into mask #${n} (demo).`)};
+// ---- portfolio ----
+function renderPort(){const act=S.masks.filter(m=>m.st==='active');const by={};act.forEach(m=>by[m.sym]=(by[m.sym]||0)+m.qty*A[m.sym].px);
+ const tot=Object.values(by).reduce((a,b)=>a+b,0);const env=S.envoys.reduce((a,e)=>a+e.purse-e.used,0);
+ $('kTot').textContent='$'+(tot+env).toFixed(2);$('kMasks').textContent=act.length;$('kEnv').textContent='$'+env.toFixed(2);$('dTot').textContent='$'+tot.toFixed(0);
+ const c=$('donut').getContext('2d');c.clearRect(0,0,260,260);let a0=-Math.PI/2;const ks=Object.keys(by);
+ ks.forEach(k=>{const a1=a0+by[k]/tot*Math.PI*2;c.beginPath();c.arc(130,130,108,a0+.02,a1-.02);c.strokeStyle=A[k].c;c.lineWidth=26;c.lineCap='round';c.stroke();a0=a1});
+ $('legend').innerHTML=ks.map(k=>`<div><span><i style="background:${A[k].c}"></i>${k}</span><span class="mono">$${by[k].toFixed(2)}</span></div>`).join('');
+ $('act').innerHTML=S.act.map(([a,b])=>`<div><span>${a}</span><small>${b}</small></div>`).join('')}
+// ---- boot ----
+quote();renderMasks();renderEnv();go(location.hash.slice(1)||'trade');
+</script>
+</body>
+</html>

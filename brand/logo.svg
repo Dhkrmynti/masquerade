@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300">
+ <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f6e0a4"/><stop offset=".45" stop-color="#e2b864"/><stop offset="1" stop-color="#a87a2c"/></linearGradient>
+ <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&amp;family=JetBrains+Mono:wght@500&amp;display=swap');</style></defs>
+ <g transform="translate(30 66) scale(1.6)">
+  <path d="M100 30 C70 4 22 2 6 26 C-2 40 6 70 30 86 C52 100 80 92 100 70 C120 92 148 100 170 86 C194 70 202 40 194 26 C178 2 130 4 100 30Z" fill="url(#g)" stroke="#6b4a18" stroke-width="2.5"/>
+  <ellipse cx="56" cy="50" rx="24" ry="14" fill="#0a0506" transform="rotate(-8 56 50)"/>
+  <ellipse cx="144" cy="50" rx="24" ry="14" fill="#0a0506" transform="rotate(8 144 50)"/>
+  <path d="M100 32 L108 44 L100 58 L92 44Z" fill="#a8243a" stroke="#f6e0a4" stroke-width="1.5"/>
+ </g>
+ <text x="380" y="178" font-family="Playfair Display, Georgia, serif" font-weight="600" font-size="112" fill="#f6ead6">Masquerade</text>
+ <text x="386" y="232" font-family="JetBrains Mono, monospace" font-weight="500" font-size="22" letter-spacing="9" fill="#e6c378">EVERY TRADE WEARS A NEW MASK</text>
+</svg>
