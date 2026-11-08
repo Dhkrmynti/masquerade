@@ -8,7 +8,9 @@
 <meta property="og:image" content="brand/mark-512.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Masquerade · every trade wears a new mask</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{--bg:#0a0506;--bg2:#140a0b;--bg3:#1d0f10;--ink:#f6ead6;--mute:#bba98f;--line:rgba(230,195,120,.16);--gold:#e6c378;--gold2:#c9a24f;--vel:#6e1422;--vel2:#8e1b2c;--vel3:#4a0d17}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -27,23 +29,11 @@ a{color:inherit;text-decoration:none}
 .floor{position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(#2a1208,#100603);border-top:4px solid var(--gold2);box-shadow:0 -10px 40px rgba(230,195,120,.12)}
 .floor:before{content:'';position:absolute;left:50%;top:0;width:620px;height:100px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,236,190,.35),transparent)}
 .floor:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 120px,rgba(0,0,0,.25) 120px 122px);opacity:.6}
-/* curtains: velvet texture from js/stage.js; gathered and tied back on open */
-.cur{position:absolute;top:0;bottom:0;width:52%;z-index:4;background:#3a0710 repeat-x;background-size:auto 100%;pointer-events:none;
- transition:transform 2.4s cubic-bezier(.65,0,.2,1),clip-path 2.4s cubic-bezier(.65,0,.2,1);box-shadow:0 0 60px rgba(0,0,0,.7)}
-.cur.l{left:0;transform-origin:left center;clip-path:polygon(0 0,100% 0%,100% 8%,100% 16%,100% 24%,100% 32%,100% 38%,100% 43%,100% 48%,100% 53%,100% 60%,100% 68%,100% 78%,100% 89%,100% 100%,0 100%)}
-.cur.r{right:0;transform-origin:right center;background-position:right top;clip-path:polygon(100% 0,0% 0%,0% 8%,0% 16%,0% 24%,0% 32%,0% 38%,0% 43%,0% 48%,0% 53%,0% 60%,0% 68%,0% 78%,0% 89%,0% 100%,100% 100%)}
-.open .cur.l{transform:scaleX(.32);clip-path:polygon(0 0,100.0% 0%,96.4% 8%,92.4% 16%,88.0% 24%,82.8% 32%,78.0% 38%,73.0% 43%,62.0% 48%,68.6% 53%,74.7% 60%,80.6% 68%,87.2% 78%,93.8% 89%,100.0% 100%,0 100%)}
-.open .cur.r{transform:scaleX(.32);clip-path:polygon(100% 0,0.0% 0%,3.6% 8%,7.6% 16%,12.0% 24%,17.2% 32%,22.0% 38%,27.0% 43%,38.0% 48%,31.4% 53%,25.3% 60%,19.4% 68%,12.8% 78%,6.2% 89%,0.0% 100%,100% 100%)}
-/* gold fringe on the leading edges */
-.cur:before{content:'';position:absolute;top:0;bottom:0;width:12px;background:repeating-linear-gradient(90deg,#f3d58d 0 1px,rgba(201,162,79,.5) 1px 3px);box-shadow:0 0 8px rgba(0,0,0,.6)}
-.cur.l:before{right:0}.cur.r:before{left:0}
-.cur:after{content:'';position:absolute;inset:0;background:radial-gradient(120% 60% at 50% 40%,transparent 40%,rgba(0,0,0,.35))}
-/* tie-backs: twisted gold rope wrapped round the gathered curtain, tassel hanging off the end */
-.tie{position:absolute;top:calc(48% - 7px);height:14px;width:calc(52% * .32 * .62 + 10px);z-index:5;opacity:0;transition:opacity .8s 2.1s;pointer-events:none;border-radius:7px;
- background:repeating-linear-gradient(60deg,#7a5418 0 3px,#f6e0a4 3px 6px,#c9a24f 6px 9px);box-shadow:0 6px 10px rgba(0,0,0,.6),inset 0 -3px 4px rgba(60,35,10,.5)}
-.tie:after{content:'';position:absolute;top:6px;width:18px;height:58px;background:linear-gradient(90deg,#8a6424,#f6e0a4 50%,#8a6424);clip-path:polygon(38% 0,62% 0,64% 18%,100% 100%,0 100%,36% 18%);filter:drop-shadow(0 4px 4px rgba(0,0,0,.5))}
-.tie.l{left:0}.tie.l:after{right:-6px}.tie.r{right:0}.tie.r:after{left:-6px}
-.open .tie{opacity:1}
+/* curtains + tie-backs are drawn on this canvas by js/stage.js */
+.curtains{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;
+ /* placeholder pleats until the canvas paints */
+ background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 18%,transparent 75%,rgba(0,0,0,.5)),repeating-linear-gradient(90deg,#2a0509 0,#7a1424 22px,#b0223a 34px,#7a1424 46px,#2a0509 70px)}
+.curtains.ready{background:none}
 .valance{position:absolute;top:0;left:0;width:100%;height:132px;z-index:6;pointer-events:none;filter:drop-shadow(0 14px 16px rgba(0,0,0,.65))}
 /* nav sits on the valance */
 nav{position:absolute;top:0;left:0;right:0;z-index:10;height:72px}
@@ -152,7 +142,7 @@ footer .pf{color:var(--ink);font-size:30px;font-style:italic}
   <p>Send an envoy on stage with a purse it can't exceed. It trades tokenized stocks from its own wallet, and yours never hands over a key.</p>
   <div class="ask"><svg viewBox="0 0 200 110" width="28"><use href="#mask"/></svg><input placeholder="Buy $200 of TSLA if it opens red"><button onclick="location.href='app.html#envoys'">Send an envoy</button></div>
  </div>
- <div class="cur l"></div><div class="cur r"></div><div class="tie l"></div><div class="tie r"></div>
+ <canvas class="curtains" id="curtains"></canvas>
  <canvas class="valance" id="valance"></canvas>
  <nav><div class="wrap">
   <a class="logo" href="#"><svg viewBox="0 0 200 110"><use href="#mask"/></svg>Masquerade</a>
@@ -217,17 +207,19 @@ footer .pf{color:var(--ink);font-size:30px;font-style:italic}
 
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <script type="module">
-import {mountMask} from './mask3d.js';
 import {dressStage} from './js/stage.js';
-dressStage();
+const q=location.search;
+dressStage(q.includes('closed')?'closed':q.includes('still')?'open':'animate');
+document.getElementById('curtains').classList.add('ready');
+</script>
+<script type="module">
+import {mountMask} from './mask3d.js';
 const m=mountMask(document.getElementById('m3d'),{particles:false,interactive:true,dist:8.4});
 if(!m)document.documentElement.classList.add('no-webgl');
 </script>
 <script>
-// open the curtains (?still skips the animation, for screenshots)
-if(location.search.includes('closed')){document.documentElement.classList.add('still')}
-else if(location.search.includes('still')){document.documentElement.classList.add('still');document.getElementById('stage').classList.add('open');document.querySelectorAll('.rv').forEach(e=>e.classList.add('on'))}
-else requestAnimationFrame(()=>setTimeout(()=>document.getElementById('stage').classList.add('open'),250));
+// ?still / ?closed: skip transitions so headless screenshots show the final state
+if(location.search.includes('still')||location.search.includes('closed')){document.documentElement.classList.add('still');if(location.search.includes('still'))document.querySelectorAll('.rv').forEach(e=>e.classList.add('on'))}
 // dust drifting in the spotlight
 const cv=document.getElementById('dust'),g=cv.getContext('2d');let W,H,P=[];
 const rs=()=>{W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;P=[...Array(110)].map(()=>({x:W/2+(Math.random()-.5)*W*.45,y:Math.random()*H,r:Math.random()*1.8+.4,v:Math.random()*.25+.05,a:Math.random()}))};
